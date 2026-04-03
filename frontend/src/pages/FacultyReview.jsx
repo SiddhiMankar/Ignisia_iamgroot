@@ -271,7 +271,7 @@ export default function FacultyReview() {
                        strokeDasharray="6 6"
                        strokeWidth={2}
                        label={{ 
-                         value: `${Math.round(activeNode.confidence * 100)}% Match`, 
+                         value: `Cosine Sim: ${activeNode.confidence.toFixed(2)}`, 
                          fill: getClusterColor(activeNode.cluster),
                          fontSize: 14,
                          fontWeight: 'bold',
@@ -336,7 +336,7 @@ export default function FacultyReview() {
                {activeNode.cluster !== 'master' && (
                  <div className="flex items-center space-x-2 text-sm mt-4 bg-brand-500/10 text-brand-400 px-4 py-1.5 rounded-full border border-brand-500/20">
                    <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-                   <span>{Math.round(activeNode.confidence * 100)}% Confidence Match</span>
+                   <span>Cosine Similarity: {activeNode.confidence.toFixed(2)}</span>
                  </div>
                )}
             </div>
