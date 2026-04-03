@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, UploadCloud, CheckCircle, BarChart3, Settings } from 'lucide-react';
+import { LayoutDashboard, FileText, UploadCloud, CheckCircle, BarChart3, Settings, LogOut } from 'lucide-react';
 
 export default function DashboardLayout({ children }) {
   const navItems = [
@@ -43,10 +43,21 @@ export default function DashboardLayout({ children }) {
           ))}
         </nav>
 
-        <div className="p-6 border-t border-slate-800">
+        <div className="p-6 border-t border-slate-800 space-y-4">
           <button className="flex items-center space-x-3 text-slate-400 hover:text-white transition-colors w-full">
             <Settings className="w-5 h-5" />
             <span className="font-medium">Settings</span>
+          </button>
+          
+          <button 
+            onClick={() => {
+              // Clear any auth tokens here if securely logged in in the future
+              window.location.href = '/login';
+            }}
+            className="flex items-center space-x-3 text-rose-400 hover:text-rose-300 transition-colors w-full"
+          >
+            <LogOut className="w-5 h-5" />
+            <span className="font-medium">Logout</span>
           </button>
         </div>
       </aside>
