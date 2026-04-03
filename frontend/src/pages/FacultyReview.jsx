@@ -1,147 +1,110 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ChevronRight, Check, X, AlertCircle, BrainCircuit } from 'lucide-react';
+import { Layers, CheckCircle, AlertTriangle, ChevronRight, User } from 'lucide-react';
 
 export default function FacultyReview() {
   const [clusters, setClusters] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch the mock data from our node backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reviews/mock')
+    // Ping the real MongoDB backend
+    axios.get('http://localhost:5000/api/sessions/hackathon_session_1/clusters')
       .then(res => {
-        setClusters(res.data.clusters);
+        setClusters(res.data.clusters || []);
         setLoading(false);
       })
       .catch(err => {
-        console.error(err);
+        console.error("Fetch DB error:", err);
         setLoading(false);
       });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500"></div>
-      </div>
-    );
-  }
-
-  // Active viewing cluster
-  const activeCluster = clusters[0] || null;
+  if (loading) return <div className="p-8 text-white">Fetching Live AI Clusters from Database...</div>;
 
   return (
-    <div className="space-y-6">
-      <header className="flex justify-between items-end">
+    <div className="max-w-7xl mx-auto space-y-6 mt-4 pb-12">
+      <header className="mb-8 flex justify-between items-end">
         <div>
-          <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">Evaluation Pending</h2>
-          <h1 className="text-3xl font-bold text-white">Question 1 Review</h1>
-        </div>
-        <div className="flex space-x-3">
-          <button className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">
-            Previous
-          </button>
-          <button className="px-4 py-2 rounded-lg bg-white text-slate-900 font-medium hover:bg-slate-200 transition-colors flex items-center">
-            Next Question <ChevronRight className="w-4 h-4 ml-1" />
-          </button>
+          <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">Evaluation Session</h2>
+          <h1 className="text-3xl font-bold text-white">Cluster Approval Dashboard</h1>
+          <p className="text-slate-400 mt-2">Approve these semantic clusters and immediately grade {clusters.reduce((acc, c) => acc + (c.answers?.length || 0), 0)} students at once.</p>
         </div>
       </header>
 
-      {activeCluster ? (
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Column: AI Logic & Controls */}
-          <div className="col-span-12 xl:col-span-5 space-y-6">
-            
-            {/* Score Badge Card */}
-            <div className="premium-card flex flex-col items-center justify-center py-10 relative overflow-hidden">
-               {/* Background pattern */}
-               <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                 <BrainCircuit className="w-32 h-32" />
-               </div>
-
-               <h3 className="text-slate-400 font-medium mb-2">AI Suggested Score</h3>
-               <div className="text-7xl font-bold text-white mb-2">
-                 {activeCluster.suggestedScore} <span className="text-3xl text-slate-500">/ 5</span>
-               </div>
-               
-               <div className="flex items-center space-x-2 text-sm mt-4 bg-brand-500/10 text-brand-400 px-4 py-1.5 rounded-full border border-brand-500/20">
-                 <div className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-                 <span>{activeCluster.confidence * 100}% Confidence Match</span>
-               </div>
-            </div>
-
-            {/* Rubric Match Card */}
-            <div className="premium-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Rubric Analysis</h3>
-              <div className="space-y-3">
-                <div className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-green-300">Keyword Found: Gravity</p>
-                    <p className="text-xs text-slate-400 mt-1">Found in 100% of answers in this cluster.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                  <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-red-300">Missing Concept: Friction</p>
-                    <p className="text-xs text-slate-400 mt-1">Formula derivation missing required variable.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Action Bar */}
-            <div className="premium-card bg-brand-600/5 hover:border-brand-500/50">
-              <h3 className="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wide">Finalize Grade</h3>
-              <div className="flex space-x-4">
-                <input 
-                  type="number" 
-                  defaultValue={activeCluster.suggestedScore}
-                  className="w-20 bg-slate-950 border border-slate-700 rounded-lg text-center text-xl font-bold text-white focus:outline-none focus:border-brand-500"
-                />
-                <button className="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-lg flex items-center justify-center transition-colors shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                  Approve for {activeCluster.answers.length} Answers
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Original Answers Viewer */}
-          <div className="col-span-12 xl:col-span-7 space-y-6">
-            <div className="premium-card h-full flex flex-col">
-              <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
-                <h3 className="text-lg font-semibold text-white flex items-center">
-                  <FileText className="w-5 h-5 mr-2 text-slate-400" />
-                  Answer Manifest ({activeCluster.answers.length})
-                </h3>
-                <span className="text-xs font-medium bg-slate-800 text-slate-400 px-3 py-1 rounded-full">
-                  Cluster ID: {activeCluster.id}
-                </span>
-              </div>
-              
-              <div className="flex-1 space-y-4 overflow-y-auto pr-2">
-                {activeCluster.answers.map((ans, idx) => (
-                  <div key={idx} className="p-5 rounded-xl bg-slate-950 border border-slate-800 group hover:border-slate-700 transition-colors">
-                    <p className="text-slate-300 leading-relaxed text-lg font-light">
-                      {/* Fake highlight for demo wow-factor */}
-                      {ans.split(/(gravity)/i).map((part, i) => 
-                        part.toLowerCase() === 'gravity' 
-                          ? <span key={i} className="text-green-400 bg-green-400/10 px-1 rounded">{part}</span>
-                          : part
-                      )}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      {clusters.length === 0 ? (
+        <div className="premium-card text-center p-12 text-slate-400 border-slate-800 border-dashed">
+            No clusters exist yet. Run the Upload pipeline!
         </div>
       ) : (
-        <div className="p-8 text-center text-slate-400 premium-card">
-          <AlertCircle className="w-12 h-12 mx-auto mb-4 text-slate-600" />
-          <p>No clusters found. Ensure the mock backend server is running on port 5000.</p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Main Cluster Feed */}
+          <div className="lg:col-span-2 space-y-6">
+            {clusters.map((cluster) => (
+              <div key={cluster._id} className="premium-card relative border-l-4 border-l-brand-500 overflow-hidden group hover:border-l-brand-400 transition-all">
+                <div className="flex justify-between items-start mb-6 border-b border-slate-800 pb-4">
+                   <div className="flex items-center">
+                     <div className="bg-brand-900/50 p-2 rounded mr-4">
+                        <Layers className="text-brand-400 w-5 h-5" />
+                     </div>
+                     <div>
+                       <h3 className="text-lg font-bold text-white">Cluster {cluster._id.substring(18)}</h3>
+                       <p className="text-sm text-slate-400 flex items-center mt-1">
+                          <User className="w-4 h-4 mr-1" /> {cluster.answers?.length || 1} identical student responses
+                       </p>
+                     </div>
+                   </div>
+                   
+                   <div className="flex space-x-3 items-center">
+                      <div className="text-right mr-4">
+                         <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">AI Suggestion</p>
+                         <p className="text-2xl font-bold text-green-400">{cluster.aiEvaluation?.suggestedScore} pts</p>
+                      </div>
+                   </div>
+                </div>
+
+                <div className="bg-slate-950 p-4 rounded-lg font-mono text-sm text-slate-300 leading-relaxed border border-slate-800 mb-6">
+                   <div className="mb-2 text-xs text-slate-500 font-sans uppercase">Representative Answer Text (OCR):</div>
+                   "{cluster.answers?.[0]?.cleanText || cluster.answers?.[0]?.rawText || 'Text missing'}"
+                </div>
+
+                {cluster.aiEvaluation?.edgeCaseFlags?.length > 0 && cluster.aiEvaluation.edgeCaseFlags[0] !== "NONE" && (
+                  <div className="mb-6 bg-red-900/20 border border-red-900 rounded p-3 flex items-start">
+                    <AlertTriangle className="text-red-400 w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-red-400">AI Edge-Case Detection</p>
+                      <p className="text-sm text-red-300/80 mt-1">{cluster.aiEvaluation.edgeCaseFlags.join(", ")}</p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-between mt-4">
+                  <button className="text-brand-400 text-sm font-medium hover:text-brand-300 transition-colors flex items-center">
+                    Inspect all {cluster.answers?.length} answers <ChevronRight className="w-4 h-4 ml-1" />
+                  </button>
+                  <button className="bg-brand-600 hover:bg-brand-500 text-white px-6 py-2 rounded-lg font-medium shadow-lg flex items-center transition-all disabled:opacity-50">
+                    <CheckCircle className="w-4 h-4 mr-2" /> Approve Score
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-6">
+            <div className="premium-card bg-slate-900/80 border border-slate-800">
+               <h3 className="font-bold text-white mb-4">Rubric Compliance</h3>
+               <div className="space-y-4">
+                  <div className="bg-slate-800/50 p-3 rounded border border-slate-700/50 flex items-center">
+                    <CheckCircle className="text-green-500 w-5 h-5 mr-3" />
+                    <span className="text-slate-300 text-sm">Keywords parsed correctly</span>
+                  </div>
+                  <div className="bg-slate-800/50 p-3 rounded border border-slate-700/50 flex items-center">
+                    <AlertTriangle className="text-yellow-500 w-5 h-5 mr-3" />
+                    <span className="text-slate-300 text-sm">Arithmetic logic partially verified</span>
+                  </div>
+               </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

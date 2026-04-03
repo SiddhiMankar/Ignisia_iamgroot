@@ -10,6 +10,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Import & Apply Routes
+const sessionRoutes = require('./src/routes/sessionRoutes');
+const submissionRoutes = require('./src/routes/submissionRoutes');
+
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/submissions', submissionRoutes);
+
 // Mock Evaluation Route (to unblock frontend early)
 app.get('/api/reviews/mock', (req, res) => {
     res.json({
