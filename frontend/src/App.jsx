@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import FacultyReview from './pages/FacultyReview';
+import UploadSheets from './pages/UploadSheets';
+import EvaluationSessionBuilder from './pages/EvaluationSessionBuilder';
 
 // Placeholder empty page for other routes
 const Placeholder = ({ title }) => (
@@ -17,8 +19,8 @@ function App() {
       <DashboardLayout>
         <Routes>
           <Route path="/" element={<Navigate to="/review" replace />} />
-          <Route path="/exams" element={<Placeholder title="Exams & Subjects" />} />
-          <Route path="/upload" element={<Placeholder title="Upload Answer Sheets" />} />
+          <Route path="/exams" element={<EvaluationSessionBuilder />} />
+          <Route path="/upload" element={<UploadSheets />} />
           <Route path="/review" element={<FacultyReview />} />
           <Route path="/analytics" element={<Placeholder title="Analytics Engine" />} />
         </Routes>
