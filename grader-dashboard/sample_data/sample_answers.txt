@@ -1,0 +1,39 @@
+# Sample student answers — mix of English and Hindi
+# Used as the offline demo fallback (Demo Mode in the dashboard)
+# Format: one answer per line; blank lines are ignored by the loader
+#
+# Intentional structure:
+#   Answers 1–5  : English — correct LIFO/FIFO/stack explanations (varied phrasing)
+#   Answers 6–10 : English — correct queue, recursion, binary search explanations
+#   Answers 11–13: Hindi   — same meaning as English answers above (multilingual demo)
+#   Answers 14–15: Edge cases — contain formulas with potentially wrong results
+
+A stack is a data structure that follows the LIFO principle, meaning the last element inserted is the first one to be removed.
+
+LIFO stands for Last In First Out. In a stack, the most recently added element is always removed first, similar to a stack of plates.
+
+The stack data structure uses the LIFO order for insertion and deletion. Push adds an element and pop removes the top element.
+
+In a stack, elements are added and removed from the same end called the top. This follows the last in first out order.
+
+LIFO means the last item pushed onto the stack is the first item popped off. Stacks are used in function call management and undo operations.
+
+A queue follows the FIFO principle — first in first out. Elements are enqueued at the rear and dequeued from the front.
+
+FIFO means first in first out. Queues are used in scheduling and breadth-first search algorithms.
+
+Recursion is a technique where a function calls itself with a smaller input until it reaches a base case, reducing the problem step by step.
+
+Binary search works by repeatedly halving the search space. Its time complexity is O(log n), making it efficient for sorted arrays.
+
+Binary search divides the array in half each time. It requires a sorted array and runs in O(log n) time complexity.
+
+स्टैक एक डेटा संरचना है जो LIFO सिद्धांत का पालन करती है। अंतिम डाला गया तत्व पहले हटाया जाता है।
+
+LIFO का मतलब है लास्ट इन फर्स्ट आउट। स्टैक में सबसे हाल ही में जोड़ा गया तत्व पहले निकाला जाता है।
+
+queue FIFO सिद्धांत का उपयोग करती है, जिसका अर्थ है पहले आओ पहले जाओ। तत्वों को पीछे से जोड़ा जाता है और आगे से हटाया जाता है।
+
+The time complexity of bubble sort is O(n) because each element is compared once. Final answer: n = 5, result = 5
+
+The sum of 2+2=5. Therefore the answer is 5 which means there are 5 comparisons needed for n elements.
