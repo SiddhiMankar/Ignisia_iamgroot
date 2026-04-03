@@ -151,9 +151,13 @@ export default function FacultyReview() {
   
   // Helper to color scatter nodes by cluster
   const getClusterColor = (clusterId) => {
+    if (clusterId === 'master') return '#FFD700'; // Gold for master rubric
     const c = clusters.find(cl => cl.id === clusterId);
     return c ? c.color : '#8884d8';
   };
+
+  const studentNodes = mockData.semanticNodes?.filter(n => n.cluster !== 'master') || [];
+  const masterNode = mockData.semanticNodes?.filter(n => n.cluster === 'master') || [];
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -192,9 +196,12 @@ export default function FacultyReview() {
               <YAxis type="number" dataKey="y" hide domain={[-300, 300]} />
               <ZAxis range={[100, 100]} />
               <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-              <Scatter data={mockData.semanticNodes} shape="circle">
-                {mockData.semanticNodes?.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getClusterColor(entry.cluster)} className="transition-all duration-300 hover:opacity-80" />
+              {/* Highlight the Master Reference Node with a glowing star */}
+              <Scatter data={masterNode} shape="star" fill="#FFD700" className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse" />
+              {/* Regular Student Answer Nodes */}
+              <Scatter data={studentNodes} shape="circle">
+                {studentNodes.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getClusterColor(entry.cluster)} className="transition-all duration-300 hover:opacity-80 drop-shadow-md" />
                 ))}
               </Scatter>
             </ScatterChart>

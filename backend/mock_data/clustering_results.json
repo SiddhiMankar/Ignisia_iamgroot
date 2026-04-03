@@ -2,8 +2,8 @@
   "rubricTitle": "Midterm Q1 - Stack vs Queue",
   "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue", "O(1)"],
   "missingConcepts": ["Push/Pop constraints"],
-  "referenceVector": { "x": 0, "y": 0 },
   "semanticNodes": [
+    { "id": "0", "cluster": "master", "x": 0, "y": 0, "text": "✅ RUBRIC REFERENCE VECTOR: A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO." },
     { "id": "1", "cluster": "c1-perfect", "x": 5, "y": 10, "text": "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO." },
     { "id": "2", "cluster": "c1-perfect", "x": 8, "y": -5, "text": "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO." },
     { "id": "3", "cluster": "c1-perfect", "x": -2, "y": 12, "text": "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line)." },
