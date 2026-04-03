@@ -1,68 +1,178 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ChevronRight, Check, X, AlertCircle, BrainCircuit } from 'lucide-react';
+import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers } from 'lucide-react';
+
+const MOCK_TESTS = [
+  { id: 't1', name: 'Data Structures - Midterm', date: '2026-04-01', paperCount: 45 },
+  { id: 't2', name: 'Algorithms - Final Exam', date: '2026-05-15', paperCount: 120 },
+];
+
+const MOCK_QUESTIONS = {
+  't1': [
+    { id: 'q1', text: 'Explain LIFO vs FIFO', maxScore: 10, status: 'evaluating' },
+    { id: 'q2', text: 'Write a QuickSort implementation', maxScore: 20, status: 'pending' },
+  ],
+  't2': [
+    { id: 'q3', text: 'What is a Binary Search Tree?', maxScore: 15, status: 'pending' }
+  ]
+};
 
 export default function FacultyReview() {
+  const [selectedTest, setSelectedTest] = useState(null);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  
   const [mockData, setMockData] = useState({ clusters: [], keywordsFound: [], missingConcepts: [] });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch the mock data from our node backend
+  // Fetch data only when a question is finally selected
   useEffect(() => {
-    axios.get('http://localhost:5001/api/reviews/mock')
-      .then(res => {
-        setMockData(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+    if (selectedQuestion) {
+      setLoading(true);
+      axios.get('http://localhost:5001/api/reviews/mock')
+        .then(res => {
+          setMockData(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setLoading(false);
+        });
+    }
+  }, [selectedQuestion]);
 
-  if (loading) {
+  const handleBackToTests = () => {
+    setSelectedTest(null);
+    setSelectedQuestion(null);
+  };
+
+  const handleBackToQuestions = () => {
+    setSelectedQuestion(null);
+  };
+
+  // --- STEP 1: Select Test ---
+  if (!selectedTest) {
     return (
-      <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500"></div>
+      <div className="space-y-6 animate-fade-in">
+        <header>
+          <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">Step 1</h2>
+          <h1 className="text-3xl font-bold text-white">Select a Test to Grade</h1>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          {MOCK_TESTS.map(test => (
+            <button
+              key={test.id}
+              onClick={() => setSelectedTest(test)}
+              className="premium-card text-left p-6 hover:border-brand-500/50 hover:bg-brand-500/5 transition-all group"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="p-3 rounded-lg bg-slate-800 group-hover:bg-brand-600 transition-colors">
+                  <BookOpen className="w-6 h-6 text-brand-400 group-hover:text-white" />
+                </div>
+                <span className="text-sm font-medium text-slate-500">{test.date}</span>
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">{test.name}</h3>
+              <p className="text-slate-400">{test.paperCount} student papers uploaded</p>
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
 
-  // Active viewing cluster
+  // --- STEP 2: Select Question ---
+  if (!selectedQuestion) {
+    const questions = MOCK_QUESTIONS[selectedTest.id] || [];
+    
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <header className="flex items-center space-x-4">
+          <button onClick={handleBackToTests} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">{selectedTest.name}</h2>
+            <h1 className="text-3xl font-bold text-white">Select a Question</h1>
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 gap-4 mt-8">
+          {questions.map(q => (
+            <button
+              key={q.id}
+              onClick={() => setSelectedQuestion(q)}
+              className="premium-card text-left p-6 flex justify-between items-center hover:border-brand-500/50 hover:bg-brand-500/5 transition-all group"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center font-bold text-brand-400">
+                  {q.id.toUpperCase()}
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-1">{q.text}</h3>
+                  <p className="text-sm text-slate-400">Max Score: {q.maxScore}</p>
+                </div>
+              </div>
+              <div className="flex items-center text-brand-400 font-medium group-hover:translate-x-2 transition-transform">
+                Evaluate <ChevronRight className="w-5 h-5 ml-1" />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // --- STEP 3: Data Visualization (Active Dashboard) ---
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh] space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500"></div>
+        <p className="text-slate-400 animate-pulse">Running AI FAISS clustering on papers...</p>
+      </div>
+    );
+  }
+
   const clusters = mockData.clusters || [];
   const activeCluster = clusters[0] || null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <header className="flex justify-between items-end">
-        <div>
-          <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">Evaluation Pending</h2>
-          <h1 className="text-3xl font-bold text-white">Question 1 Review</h1>
+        <div className="flex items-center space-x-4">
+          <button onClick={handleBackToQuestions} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h2 className="text-sm font-semibold text-brand-400 tracking-wider uppercase mb-1">
+              {selectedTest.name} • {selectedQuestion.id.toUpperCase()}
+            </h2>
+            <h1 className="text-3xl font-bold text-white">Grader Analytics</h1>
+          </div>
         </div>
         <div className="flex space-x-3">
           <button className="px-4 py-2 rounded-lg bg-slate-800 text-slate-300 font-medium hover:bg-slate-700 transition-colors">
-            Previous
+            Previous Cluster
           </button>
           <button className="px-4 py-2 rounded-lg bg-white text-slate-900 font-medium hover:bg-slate-200 transition-colors flex items-center">
-            Next Question <ChevronRight className="w-4 h-4 ml-1" />
+            Next Cluster <ChevronRight className="w-4 h-4 ml-1" />
           </button>
         </div>
       </header>
 
       {activeCluster ? (
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-6 mt-6">
           {/* Left Column: AI Logic & Controls */}
           <div className="col-span-12 xl:col-span-5 space-y-6">
             
             {/* Score Badge Card */}
             <div className="premium-card flex flex-col items-center justify-center py-10 relative overflow-hidden">
-               {/* Background pattern */}
                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                  <BrainCircuit className="w-32 h-32" />
                </div>
 
                <h3 className="text-slate-400 font-medium mb-2">AI Suggested Score</h3>
                <div className="text-7xl font-bold text-white mb-2">
-                 {activeCluster.suggestedScore} <span className="text-3xl text-slate-500">/ 5</span>
+                 {activeCluster.suggestedScore} <span className="text-3xl text-slate-500">/ {selectedQuestion.maxScore}</span>
                </div>
                
                <div className="flex items-center space-x-2 text-sm mt-4 bg-brand-500/10 text-brand-400 px-4 py-1.5 rounded-full border border-brand-500/20">
@@ -73,7 +183,10 @@ export default function FacultyReview() {
 
             {/* Rubric Match Card */}
             <div className="premium-card">
-              <h3 className="text-lg font-semibold text-white mb-4">Rubric Analysis</h3>
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+                <Layers className="w-5 h-5 mr-2 text-brand-400" /> 
+                Rubric Analysis
+              </h3>
               <div className="space-y-3">
                 {mockData.keywordsFound?.map((kw, i) => (
                   <div key={`kw-${i}`} className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
@@ -133,7 +246,6 @@ export default function FacultyReview() {
                 {activeCluster.answers.map((ans, idx) => (
                   <div key={idx} className="p-5 rounded-xl bg-slate-950 border border-slate-800 group hover:border-slate-700 transition-colors">
                     <p className="text-slate-300 leading-relaxed text-lg font-light">
-                      {/* Dynamic highlight for demo wow-factor */}
                       {ans.split(/(LIFO|FIFO|Stack|Queue)/i).map((part, i) => 
                         /LIFO|FIFO|Stack|Queue/i.test(part) 
                           ? <span key={i} className="text-green-400 bg-green-400/10 px-1 rounded font-medium">{part}</span>
@@ -147,9 +259,9 @@ export default function FacultyReview() {
           </div>
         </div>
       ) : (
-        <div className="p-8 text-center text-slate-400 premium-card">
+        <div className="p-8 text-center text-slate-400 premium-card mt-6">
           <AlertCircle className="w-12 h-12 mx-auto mb-4 text-slate-600" />
-          <p>No clusters found. Ensure the mock backend server is running on port 5000.</p>
+          <p>No clusters found. Ensure the mock backend server is running.</p>
         </div>
       )}
     </div>
