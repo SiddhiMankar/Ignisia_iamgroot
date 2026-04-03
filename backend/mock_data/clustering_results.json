@@ -1,70 +1,170 @@
 {
   "rubricTitle": "Midterm Q1 - Stack vs Queue",
-  "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue", "O(1)"],
-  "missingConcepts": ["Push/Pop constraints"],
   "semanticNodes": [
-    { "id": "0", "cluster": "master", "x": 0, "y": 0, "text": "✅ RUBRIC REFERENCE VECTOR: A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO." },
-    { "id": "1", "cluster": "c1-perfect", "x": 5, "y": 10, "text": "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO." },
-    { "id": "2", "cluster": "c1-perfect", "x": 8, "y": -5, "text": "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO." },
-    { "id": "3", "cluster": "c1-perfect", "x": -2, "y": 12, "text": "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line)." },
-    { "id": "4", "cluster": "c2-partial", "x": 45, "y": 60, "text": "Stack is LIFO, I'm not sure about Queue." },
-    { "id": "5", "cluster": "c2-partial", "x": 55, "y": 45, "text": "A stack is LIFO. It takes O(1) time. Queue is something else." },
-    { "id": "6", "cluster": "c2-partial", "x": 50, "y": 80, "text": "Stack uses the LIFO method to add data." },
-    { "id": "7", "cluster": "c3-edgecases-math", "x": 200, "y": -150, "text": "Stack = Queue + 2 * LIFO / n" },
-    { "id": "8", "cluster": "c3-edgecases-math", "x": 220, "y": -180, "text": "Stack = 10, Queue = 5" },
-    { "id": "9", "cluster": "c4-hindi", "x": -45, "y": -50, "text": "Stack LIFO use karta hai, aur Queue FIFO use karta hai." },
-    { "id": "10", "cluster": "c4-hindi", "x": -55, "y": -30, "text": "Stack LIFO ke principle par chalta hai. Queue FIFO par." }
+    { 
+      "id": "0", 
+      "studentId": "MASTER RUBRIC",
+      "cluster": "master", 
+      "x": 0, 
+      "y": 0, 
+      "text": "✅ RUBRIC REFERENCE VECTOR: A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
+      "suggestedScore": 10,
+      "confidence": 1.0,
+      "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue"],
+      "missingConcepts": [],
+      "feedbackSummary": "This is the absolute Ground Truth reference."
+    },
+    { 
+      "id": "1", 
+      "studentId": "Student 104",
+      "cluster": "c1-perfect", 
+      "x": 5, 
+      "y": 10, 
+      "text": "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
+      "suggestedScore": 10,
+      "confidence": 0.98,
+      "keywordsFound": ["LIFO", "FIFO"],
+      "missingConcepts": [],
+      "feedbackSummary": "Directly aligns to Rubric definitions."
+    },
+    { 
+      "id": "2", 
+      "studentId": "Student 211",
+      "cluster": "c1-perfect", 
+      "x": 8, 
+      "y": -5, 
+      "text": "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO.",
+      "suggestedScore": 10,
+      "confidence": 0.96,
+      "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue"],
+      "missingConcepts": [],
+      "feedbackSummary": "Excellent real-world analogy."
+    },
+    { 
+      "id": "3", 
+      "studentId": "Student 089",
+      "cluster": "c1-perfect", 
+      "x": -2, 
+      "y": 12, 
+      "text": "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line).",
+      "suggestedScore": 10,
+      "confidence": 0.95,
+      "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue"],
+      "missingConcepts": [],
+      "feedbackSummary": "Correct physical plates analogy."
+    },
+    { 
+      "id": "4", 
+      "studentId": "Student 342",
+      "cluster": "c2-partial", 
+      "x": 45, 
+      "y": 60, 
+      "text": "Stack is LIFO, I'm not sure about Queue.",
+      "suggestedScore": 5,
+      "confidence": 0.82,
+      "keywordsFound": ["LIFO", "Stack", "Queue"],
+      "missingConcepts": ["FIFO logic missing"],
+      "feedbackSummary": "Partial understanding. Fails to define Queue."
+    },
+    { 
+      "id": "5", 
+      "studentId": "Student 112",
+      "cluster": "c2-partial", 
+      "x": 55, 
+      "y": 45, 
+      "text": "A stack is LIFO. It takes O(1) time. Queue is something else.",
+      "suggestedScore": 6,
+      "confidence": 0.80,
+      "keywordsFound": ["LIFO", "Stack"],
+      "missingConcepts": ["FIFO logic missing"],
+      "feedbackSummary": "Brought up O(1) incorrectly without defining FIFO."
+    },
+    { 
+      "id": "6", 
+      "studentId": "Student 405",
+      "cluster": "c2-partial", 
+      "x": 50, 
+      "y": 80, 
+      "text": "Stack uses the LIFO method to add data.",
+      "suggestedScore": 4,
+      "confidence": 0.77,
+      "keywordsFound": ["LIFO", "Stack"],
+      "missingConcepts": ["Queue definition missing", "FIFO logic missing"],
+      "feedbackSummary": "Extremely brief. Missed second half of prompt."
+    },
+    { 
+      "id": "7", 
+      "studentId": "Student 019",
+      "cluster": "c3-edgecases-math", 
+      "x": 200, 
+      "y": -150, 
+      "text": "Stack = Queue + 2 * LIFO / n",
+      "suggestedScore": 0,
+      "confidence": 0.99,
+      "keywordsFound": ["Stack", "Queue", "LIFO"],
+      "missingConcepts": ["Textual English definition"],
+      "feedbackSummary": "Math anomaly detected! Expected text explanation, found erroneous formula."
+    },
+    { 
+      "id": "8", 
+      "studentId": "Student 288",
+      "cluster": "c3-edgecases-math", 
+      "x": 220, 
+      "y": -180, 
+      "text": "Stack = 10, Queue = 5",
+      "suggestedScore": 0,
+      "confidence": 0.99,
+      "keywordsFound": ["Stack", "Queue"],
+      "missingConcepts": ["Textual English definition"],
+      "feedbackSummary": "Math anomaly detected. Hardcoded variables."
+    },
+    { 
+      "id": "9", 
+      "studentId": "Student 150",
+      "cluster": "c4-hindi", 
+      "x": -45, 
+      "y": -50, 
+      "text": "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
+      "suggestedScore": 10,
+      "confidence": 0.88,
+      "keywordsFound": ["Stack", "LIFO", "Queue", "FIFO"],
+      "missingConcepts": [],
+      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
+    },
+    { 
+      "id": "10", 
+      "studentId": "Student 204",
+      "cluster": "c4-hindi", 
+      "x": -55, 
+      "y": -30, 
+      "text": "Stack LIFO ke principle par chalta hai. Queue FIFO par.",
+      "suggestedScore": 9,
+      "confidence": 0.85,
+      "keywordsFound": ["Stack", "LIFO", "Queue", "FIFO"],
+      "missingConcepts": [],
+      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
+    }
   ],
   "clusters": [
     {
       "id": "c1-perfect",
       "name": "Perfect Match",
-      "color": "#22c55e",
-      "answers": [
-        "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
-        "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO.",
-        "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line)."
-      ],
-      "suggestedScore": 10,
-      "confidence": 0.98,
-      "feedbackSummary": "Perfect definitions of LIFO/FIFO with correct physical analogies."
+      "color": "#22c55e"
     },
     {
       "id": "c2-partial",
       "name": "Partial Definition",
-      "color": "#eab308",
-      "answers": [
-        "Stack is LIFO, I'm not sure about Queue.",
-        "A stack is LIFO. It takes O(1) time. Queue is something else.",
-        "Stack uses the LIFO method to add data."
-      ],
-      "suggestedScore": 5,
-      "confidence": 0.82,
-      "feedbackSummary": "Recognizes Stack LIFO concept but fails to define Queue."
+      "color": "#eab308"
     },
     {
       "id": "c3-edgecases-math",
       "name": "Math Anomaly",
-      "color": "#ef4444",
-      "answers": [
-        "Stack = Queue + 2 * LIFO / n",
-        "Stack = 10, Queue = 5"
-      ],
-      "suggestedScore": 0,
-      "confidence": 0.99,
-      "feedbackSummary": "Math anomaly detected! Expected text explanation, found erroneous formula."
+      "color": "#ef4444"
     },
     {
       "id": "c4-hindi",
       "name": "Hindi Correct",
-      "color": "#3b82f6",
-      "answers": [
-        "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
-        "Stack LIFO ke principle par chalta hai. Queue FIFO par."
-      ],
-      "suggestedScore": 10,
-      "confidence": 0.88,
-      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
+      "color": "#3b82f6"
     }
   ]
 }
