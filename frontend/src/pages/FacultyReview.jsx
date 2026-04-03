@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers } from 'lucide-react';
+import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis } from 'recharts';
 
 const MOCK_TESTS = [
   { id: 't1', name: 'Data Structures - Midterm', date: '2026-04-01', paperCount: 45 },
@@ -17,11 +18,24 @@ const MOCK_QUESTIONS = {
   ]
 };
 
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="bg-slate-900 border border-slate-700 p-3 rounded-lg shadow-xl max-w-xs">
+        <p className="text-xs font-semibold text-brand-400 mb-1">Cluster: {data.cluster}</p>
+        <p className="text-sm text-slate-300 italic">"{data.text}"</p>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function FacultyReview() {
   const [selectedTest, setSelectedTest] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   
-  const [mockData, setMockData] = useState({ clusters: [], keywordsFound: [], missingConcepts: [] });
+  const [mockData, setMockData] = useState({ clusters: [], keywordsFound: [], missingConcepts: [], semanticNodes: [] });
   const [loading, setLoading] = useState(false);
 
   // Fetch data only when a question is finally selected
@@ -134,6 +148,12 @@ export default function FacultyReview() {
 
   const clusters = mockData.clusters || [];
   const activeCluster = clusters[0] || null;
+  
+  // Helper to color scatter nodes by cluster
+  const getClusterColor = (clusterId) => {
+    const c = clusters.find(cl => cl.id === clusterId);
+    return c ? c.color : '#8884d8';
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -159,8 +179,31 @@ export default function FacultyReview() {
         </div>
       </header>
 
+      {/* 2D Semantic Distribution Map */}
+      <div className="col-span-12 premium-card mt-6">
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-white">Semantic AI Distance Map</h3>
+          <p className="text-sm text-slate-400">FAISS dimensionality reduction. Nodes mapped by contextual distance from the master Rubric vector.</p>
+        </div>
+        <div className="h-64 w-full mix-blend-screen">
+          <ResponsiveContainer width="100%" height="100%">
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <XAxis type="number" dataKey="x" hide domain={[-300, 300]} />
+              <YAxis type="number" dataKey="y" hide domain={[-300, 300]} />
+              <ZAxis range={[100, 100]} />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
+              <Scatter data={mockData.semanticNodes} shape="circle">
+                {mockData.semanticNodes?.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getClusterColor(entry.cluster)} className="transition-all duration-300 hover:opacity-80" />
+                ))}
+              </Scatter>
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
       {activeCluster ? (
-        <div className="grid grid-cols-12 gap-6 mt-6">
+        <div className="grid grid-cols-12 gap-6">
           {/* Left Column: AI Logic & Controls */}
           <div className="col-span-12 xl:col-span-5 space-y-6">
             

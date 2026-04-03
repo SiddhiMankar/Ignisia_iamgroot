@@ -2,9 +2,24 @@
   "rubricTitle": "Midterm Q1 - Stack vs Queue",
   "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue", "O(1)"],
   "missingConcepts": ["Push/Pop constraints"],
+  "referenceVector": { "x": 0, "y": 0 },
+  "semanticNodes": [
+    { "id": "1", "cluster": "c1-perfect", "x": 5, "y": 10, "text": "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO." },
+    { "id": "2", "cluster": "c1-perfect", "x": 8, "y": -5, "text": "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO." },
+    { "id": "3", "cluster": "c1-perfect", "x": -2, "y": 12, "text": "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line)." },
+    { "id": "4", "cluster": "c2-partial", "x": 45, "y": 60, "text": "Stack is LIFO, I'm not sure about Queue." },
+    { "id": "5", "cluster": "c2-partial", "x": 55, "y": 45, "text": "A stack is LIFO. It takes O(1) time. Queue is something else." },
+    { "id": "6", "cluster": "c2-partial", "x": 50, "y": 80, "text": "Stack uses the LIFO method to add data." },
+    { "id": "7", "cluster": "c3-edgecases-math", "x": 200, "y": -150, "text": "Stack = Queue + 2 * LIFO / n" },
+    { "id": "8", "cluster": "c3-edgecases-math", "x": 220, "y": -180, "text": "Stack = 10, Queue = 5" },
+    { "id": "9", "cluster": "c4-hindi", "x": -45, "y": -50, "text": "Stack LIFO use karta hai, aur Queue FIFO use karta hai." },
+    { "id": "10", "cluster": "c4-hindi", "x": -55, "y": -30, "text": "Stack LIFO ke principle par chalta hai. Queue FIFO par." }
+  ],
   "clusters": [
     {
       "id": "c1-perfect",
+      "name": "Perfect Match",
+      "color": "#22c55e",
       "answers": [
         "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
         "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO.",
@@ -16,6 +31,8 @@
     },
     {
       "id": "c2-partial",
+      "name": "Partial Definition",
+      "color": "#eab308",
       "answers": [
         "Stack is LIFO, I'm not sure about Queue.",
         "A stack is LIFO. It takes O(1) time. Queue is something else.",
@@ -27,6 +44,8 @@
     },
     {
       "id": "c3-edgecases-math",
+      "name": "Math Anomaly",
+      "color": "#ef4444",
       "answers": [
         "Stack = Queue + 2 * LIFO / n",
         "Stack = 10, Queue = 5"
@@ -37,6 +56,8 @@
     },
     {
       "id": "c4-hindi",
+      "name": "Hindi Correct",
+      "color": "#3b82f6",
       "answers": [
         "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
         "Stack LIFO ke principle par chalta hai. Queue FIFO par."
