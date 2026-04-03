@@ -17,7 +17,7 @@
     { 
       "id": "1", 
       "studentId": "Student 104",
-      "cluster": "c1-perfect", 
+      "cluster": "c1", 
       "x": 5, 
       "y": 10, 
       "text": "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
@@ -30,7 +30,7 @@
     { 
       "id": "2", 
       "studentId": "Student 211",
-      "cluster": "c1-perfect", 
+      "cluster": "c1", 
       "x": 8, 
       "y": -5, 
       "text": "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO.",
@@ -42,129 +42,103 @@
     },
     { 
       "id": "3", 
-      "studentId": "Student 089",
-      "cluster": "c1-perfect", 
+      "studentId": "Student 150 (Hindi)",
+      "cluster": "c1", 
       "x": -2, 
       "y": 12, 
-      "text": "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line).",
+      "text": "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
       "suggestedScore": 10,
       "confidence": 0.95,
-      "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue"],
+      "keywordsFound": ["Stack", "LIFO", "Queue", "FIFO"],
       "missingConcepts": [],
-      "feedbackSummary": "Correct physical plates analogy."
+      "feedbackSummary": "Hindi/Hinglish translation maps perfectly to accurate technical English concepts."
     },
     { 
       "id": "4", 
       "studentId": "Student 342",
-      "cluster": "c2-partial", 
+      "cluster": "c2", 
       "x": 45, 
       "y": 60, 
       "text": "Stack is LIFO, I'm not sure about Queue.",
       "suggestedScore": 5,
       "confidence": 0.82,
-      "keywordsFound": ["LIFO", "Stack", "Queue"],
-      "missingConcepts": ["FIFO logic missing"],
+      "keywordsFound": ["LIFO", "Stack"],
+      "missingConcepts": ["Queue definition missing", "FIFO logic"],
       "feedbackSummary": "Partial understanding. Fails to define Queue."
     },
     { 
       "id": "5", 
-      "studentId": "Student 112",
-      "cluster": "c2-partial", 
+      "studentId": "Student 204 (Hindi)",
+      "cluster": "c2", 
       "x": 55, 
       "y": 45, 
-      "text": "A stack is LIFO. It takes O(1) time. Queue is something else.",
-      "suggestedScore": 6,
+      "text": "Stack toh LIFO hota hai, but Queue ke baare mein kal padhenge.",
+      "suggestedScore": 4,
       "confidence": 0.80,
       "keywordsFound": ["LIFO", "Stack"],
-      "missingConcepts": ["FIFO logic missing"],
-      "feedbackSummary": "Brought up O(1) incorrectly without defining FIFO."
+      "missingConcepts": ["Queue", "FIFO logic"],
+      "feedbackSummary": "Hindi answer correctly defines Stack but explicitly misses Queue."
     },
     { 
       "id": "6", 
       "studentId": "Student 405",
-      "cluster": "c2-partial", 
-      "x": 50, 
-      "y": 80, 
-      "text": "Stack uses the LIFO method to add data.",
-      "suggestedScore": 4,
-      "confidence": 0.77,
-      "keywordsFound": ["LIFO", "Stack"],
-      "missingConcepts": ["Queue definition missing", "FIFO logic missing"],
-      "feedbackSummary": "Extremely brief. Missed second half of prompt."
+      "cluster": "c3", 
+      "x": 120, 
+      "y": 110, 
+      "text": "Stack uses FIFO method. Queue is LIFO like plates.",
+      "suggestedScore": 0,
+      "confidence": 0.91,
+      "keywordsFound": ["Stack", "Queue", "FIFO", "LIFO"],
+      "missingConcepts": ["Correct terminology association"],
+      "feedbackSummary": "Severe Conceptual Error! Swapped the definitions entirely."
     },
     { 
       "id": "7", 
       "studentId": "Student 019",
-      "cluster": "c3-edgecases-math", 
-      "x": 200, 
+      "cluster": "c4", 
+      "x": 250, 
       "y": -150, 
       "text": "Stack = Queue + 2 * LIFO / n",
       "suggestedScore": 0,
       "confidence": 0.99,
       "keywordsFound": ["Stack", "Queue", "LIFO"],
       "missingConcepts": ["Textual English definition"],
-      "feedbackSummary": "Math anomaly detected! Expected text explanation, found erroneous formula."
+      "feedbackSummary": "Edge Case Math anomaly! Expected text explanation, found erroneous formula."
     },
     { 
       "id": "8", 
       "studentId": "Student 288",
-      "cluster": "c3-edgecases-math", 
-      "x": 220, 
+      "cluster": "c4", 
+      "x": 270, 
       "y": -180, 
-      "text": "Stack = 10, Queue = 5",
-      "suggestedScore": 0,
-      "confidence": 0.99,
+      "text": "array[stack] -> pointer[queue]",
+      "suggestedScore": 2,
+      "confidence": 0.94,
       "keywordsFound": ["Stack", "Queue"],
-      "missingConcepts": ["Textual English definition"],
-      "feedbackSummary": "Math anomaly detected. Hardcoded variables."
-    },
-    { 
-      "id": "9", 
-      "studentId": "Student 150",
-      "cluster": "c4-hindi", 
-      "x": -45, 
-      "y": -50, 
-      "text": "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
-      "suggestedScore": 10,
-      "confidence": 0.88,
-      "keywordsFound": ["Stack", "LIFO", "Queue", "FIFO"],
-      "missingConcepts": [],
-      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
-    },
-    { 
-      "id": "10", 
-      "studentId": "Student 204",
-      "cluster": "c4-hindi", 
-      "x": -55, 
-      "y": -30, 
-      "text": "Stack LIFO ke principle par chalta hai. Queue FIFO par.",
-      "suggestedScore": 9,
-      "confidence": 0.85,
-      "keywordsFound": ["Stack", "LIFO", "Queue", "FIFO"],
-      "missingConcepts": [],
-      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
+      "missingConcepts": ["Textual English definition", "LIFO/FIFO properties"],
+      "feedbackSummary": "Edge Case Code anomaly. Wrote pseudo-code syntax instead of conceptual rule."
     }
   ],
   "clusters": [
     {
-      "id": "c1-perfect",
-      "name": "Perfect Match",
+      "id": "c1",
+      "name": "Correct Explanation",
       "color": "#22c55e"
     },
     {
-      "id": "c2-partial",
-      "name": "Partial Definition",
+      "id": "c2",
+      "name": "Partial Understanding",
       "color": "#eab308"
     },
     {
-      "id": "c3-edgecases-math",
-      "name": "Math Anomaly",
-      "color": "#ef4444"
+      "id": "c3",
+      "name": "Conceptual Error",
+      "color": "#f97316"
     },
     {
-      "id": "c4-hindi",
-      "name": "Hindi Correct",
-      "color": "#3b82f6"
+      "id": "c4",
+      "name": "Edge Case",
+      "color": "#ef4444"
     }
   ]
 }

@@ -45,6 +45,17 @@ export default function FacultyReview() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [loading, setLoading] = useState(false);
 
+  // LLM Tutoring State (Hackathon Twist 1)
+  const [tutorNote, setTutorNote] = useState('');
+  const [generatingLLM, setGeneratingLLM] = useState(false);
+  const [llmOutput, setLlmOutput] = useState(null);
+
+  useEffect(() => {
+     setTutorNote('');
+     setGeneratingLLM(false);
+     setLlmOutput(null);
+  }, [activeNode]);
+
   // Handle Trackpad Scroll to Zoom
   const handleWheel = (e) => {
     // Only zoom if delta is significant to avoid twitching
@@ -78,6 +89,39 @@ export default function FacultyReview() {
   const resetView = () => {
     setZoomDomain(300);
     setPan({ x: 0, y: 0 });
+  };
+
+  const handleGenerateLLM = () => {
+    setGeneratingLLM(true);
+    setTimeout(() => {
+        // Construct the mock personalized dynamic email
+        const emailContent = `Subject: Personalized Tutoring Plan - Midterm Q1
+
+Dear ${activeNode.studentId},
+
+We noticed you could use some fine-tuning regarding your understanding of the concepts of Stack and Queue. 
+
+Your original submission: 
+"${activeNode.text}"
+---
+Professor's Assessment Note: 
+"${tutorNote || 'Please review core concept definitions.'}"
+---
+
+AI Concept Breakdown:
+You've made an effort, but let's clear up the primary distinction. 
+A Stack works exactly like a physical stack of plates—you can only safely add or remove from the very top. This behavior is defined mathematically as "Last-In, First-Out" (LIFO).
+Conversely, a Queue works identically to a line of people waiting outside a theater—the first person to arrive in line is the first person to get inside. This is "First-In, First-Out" (FIFO).
+
+Your Custom Practice Question:
+Write a small 5-line script implementing a functioning Queue using an Array, making sure to track the 'front' and 'rear' dimensional indices!
+
+Best,
+Ignisia Custom AI Tutoring
+`;
+        setLlmOutput({ text: emailContent, filename: `${activeNode.studentId.replace(/\s+/g, '_')}_Tutoring_Plan.txt` });
+        setGeneratingLLM(false);
+    }, 1500); 
   };
 
   // Fetch data only when a question is finally selected
@@ -382,20 +426,40 @@ export default function FacultyReview() {
             {/* Action Bar (Only for actual students) */}
             {activeNode.cluster !== 'master' && (
               <div className="premium-card bg-brand-600/5 hover:border-brand-500/50 shrink-0">
-                <h3 className="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wide">Finalize Student Grade</h3>
-                <div className="flex space-x-4">
-                  <input 
-                    type="number" 
-                    key={`input-${activeNode.id}`}
-                    defaultValue={activeNode.suggestedScore}
-                    min={0}
-                    max={selectedQuestion.maxScore}
-                    className="w-20 bg-slate-950 border border-slate-700 rounded-lg text-center text-xl font-bold text-white focus:outline-none focus:border-brand-500"
-                  />
-                  <button className="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-lg flex items-center justify-center transition-colors shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-                    Approve for {activeNode.studentId}
+                <h3 className="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wide">AI Tutoring Generation</h3>
+                <textarea 
+                  value={tutorNote}
+                  onChange={(e) => setTutorNote(e.target.value)}
+                  placeholder="Insert shorthand grading note (e.g. Forgot negative sign, deduct 4 points)"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white mb-4 focus:border-brand-500 outline-none resize-none h-24"
+                />
+                
+                {!llmOutput ? (
+                  <button 
+                    onClick={handleGenerateLLM} 
+                    disabled={generatingLLM}
+                    className="w-full bg-brand-600 hover:bg-brand-500 text-white font-medium rounded-lg flex items-center justify-center py-3 transition-colors shadow-[0_0_20px_rgba(37,99,235,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {generatingLLM ? '🧠 Compiling LLM Tutoring Plan...' : '✨ Generate Tutoring Plan'}
                   </button>
-                </div>
+                ) : (
+                  <button 
+                    onClick={() => {
+                        const blob = new Blob([llmOutput.text], { type: 'text/plain' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = llmOutput.filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }}
+                    className="w-full bg-green-500 hover:bg-green-400 text-slate-950 font-bold rounded-lg flex items-center justify-center py-3 transition-colors shadow-[0_0_20px_rgba(34,197,94,0.3)]"
+                  >
+                    📥 Export Tutoring File (.txt)
+                  </button>
+                )}
               </div>
             )}
 
