@@ -247,13 +247,23 @@ export default function FacultyReview() {
             </header>
             
             <div 
-              className={`flex-1 w-full mix-blend-screen min-h-[400px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              className={`flex-1 w-full mix-blend-screen min-h-[400px] relative ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
               onWheel={handleWheel}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
             >
+              {/* Floating Top-Right Cosine Similarity Metric */}
+              {activeNode && activeNode.cluster !== 'master' && (
+                <div 
+                  className="absolute top-4 right-8 z-10 font-bold px-4 py-2 bg-slate-950/90 border border-slate-800 rounded-lg shadow-xl backdrop-blur transition-colors duration-300 pointer-events-none" 
+                  style={{ color: getClusterColor(activeNode.cluster) }}
+                >
+                  Cosine Similarity: {activeNode.confidence.toFixed(2)}
+                </div>
+              )}
+              
               <ResponsiveContainer width="100%" height="100%" style={{ pointerEvents: 'none' }}>
                 <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
@@ -270,13 +280,6 @@ export default function FacultyReview() {
                        stroke={getClusterColor(activeNode.cluster)} 
                        strokeDasharray="6 6"
                        strokeWidth={2}
-                       label={{ 
-                         value: `Cosine Sim: ${activeNode.confidence.toFixed(2)}`, 
-                         fill: getClusterColor(activeNode.cluster),
-                         fontSize: 14,
-                         fontWeight: 'bold',
-                         position: 'insideTopLeft'
-                       }}
                      />
                   )}
 
