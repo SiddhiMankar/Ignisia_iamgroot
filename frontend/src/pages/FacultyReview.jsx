@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers } from 'lucide-react';
+import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
 import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis, CartesianGrid } from 'recharts';
 import { SidebarContext } from '../components/layout/DashboardLayout';
 
@@ -39,6 +39,7 @@ export default function FacultyReview() {
   
   const [mockData, setMockData] = useState({ clusters: [], semanticNodes: [] });
   const [activeNode, setActiveNode] = useState(null);
+  const [zoomDomain, setZoomDomain] = useState(300);
   const [loading, setLoading] = useState(false);
 
   // Fetch data only when a question is finally selected
@@ -189,31 +190,44 @@ export default function FacultyReview() {
           
           {/* Left Half: Fixed 2D Semantic Distribution Map */}
           <div className="w-full xl:w-1/2 premium-card flex flex-col h-full">
-            <div className="mb-4">
-              <h3 className="text-lg font-semibold text-white cursor-default">Semantic AI Distance Map</h3>
-              <p className="text-sm text-slate-400">Hover over any student node to view their unique vector grading profile.</p>
-            </div>
+            <header className="flex justify-between items-start mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white cursor-default">Semantic AI Distance Map</h3>
+                <p className="text-sm text-slate-400">Hover over any student node to view their unique vector grading profile.</p>
+              </div>
+              <div className="flex space-x-2 shrink-0">
+                <button onClick={() => setZoomDomain(prev => Math.max(50, prev - 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom In">
+                  <ZoomIn className="w-4 h-4" />
+                </button>
+                <button onClick={() => setZoomDomain(prev => Math.min(400, prev + 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom Out">
+                  <ZoomOut className="w-4 h-4" />
+                </button>
+                <button onClick={() => setZoomDomain(300)} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Reset Zoom">
+                  <Maximize className="w-4 h-4" />
+                </button>
+              </div>
+            </header>
+            
             <div className="flex-1 w-full mix-blend-screen min-h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart 
-                  margin={{ top: 20, right: 30, bottom: 20, left: 10 }}
-                  onMouseMove={(state) => {
-                    if (state && state.activePayload && state.activePayload.length > 0) {
-                      const payloadId = state.activePayload[0].payload.id;
-                      if (activeNode.id !== payloadId) {
-                        setActiveNode(state.activePayload[0].payload);
-                      }
-                    }
-                  }}
-                >
+                <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
-                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-300, 300]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
-                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-300, 300]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
+                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-zoomDomain, zoomDomain]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
+                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-zoomDomain, zoomDomain]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
                   <ZAxis range={[300, 300]} />
                   <Tooltip cursor={{ strokeDasharray: '3 3', stroke: '#cbd5e1' }} content={<CustomTooltip />} />
                   
                   {/* Highlight the Master Reference Node with a glowing star */}
-                  <Scatter name="Master" data={masterNode} shape="star" fill="#FFD700" className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse" />
+                  <Scatter 
+                    name="Master" 
+                    data={masterNode} 
+                    shape="star" 
+                    fill="#FFD700" 
+                    className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse cursor-pointer" 
+                    onMouseEnter={() => {
+                        if (masterNode.length > 0) setActiveNode(masterNode[0]);
+                    }}
+                  />
                   
                   {/* Regular Student Answer Nodes */}
                   <Scatter name="Students" data={studentNodes} shape="circle">
@@ -221,9 +235,11 @@ export default function FacultyReview() {
                       <Cell 
                         key={`cell-${index}`} 
                         fill={getClusterColor(entry.cluster)} 
-                        className="transition-all duration-300 drop-shadow-md" 
-                        stroke={activeNode.id === entry.id ? '#ffffff' : 'none'}
-                        strokeWidth={activeNode.id === entry.id ? 4 : 0}
+                        className="transition-all duration-300 drop-shadow-md cursor-pointer hover:opacity-100 opacity-80" 
+                        onMouseEnter={() => setActiveNode(entry)}
+                        onClick={() => setActiveNode(entry)}
+                        stroke={activeNode?.id === entry.id ? '#ffffff' : 'none'}
+                        strokeWidth={activeNode?.id === entry.id ? 4 : 0}
                       />
                     ))}
                   </Scatter>
