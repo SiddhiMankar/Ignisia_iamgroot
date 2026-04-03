@@ -7,9 +7,9 @@ import EvaluationSessionBuilder from './pages/EvaluationSessionBuilder';
 
 // Placeholder empty page for other routes
 const Placeholder = ({ title }) => (
-  <div className="premium-card flex flex-col items-center justify-center h-64 text-center">
-    <h2 className="text-2xl font-bold text-white mb-2">{title}</h2>
-    <p className="text-slate-400">This module represents part of the application flow.</p>
+  <div className="minimal-card flex flex-col items-center justify-center h-64 text-center">
+    <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
+    <p className="text-gray-500">This module represents part of the application flow.</p>
   </div>
 );
 

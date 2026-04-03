@@ -6,26 +6,26 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-200 antialiased font-sans;
+    @apply bg-gray-50 text-gray-900 antialiased font-sans;
   }
 }
 
-/* Custom premium scrollbar */
+/* Custom minimal scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-800 rounded-full border-2 border-slate-950;
+  @apply bg-gray-300 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-700;
+  @apply bg-gray-400;
 }
 
-/* Micro-animations */
-.premium-card {
-  @apply bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl transition-all duration-300 hover:border-slate-700 hover:shadow-2xl;
+/* Minimal card */
+.minimal-card {
+  @apply bg-white border border-gray-200 rounded-lg p-6 shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300;
 }

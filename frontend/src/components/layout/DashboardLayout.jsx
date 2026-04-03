@@ -12,14 +12,14 @@ export default function DashboardLayout({ children }) {
   ];
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-200 overflow-hidden font-sans">
+    <div className="flex h-screen bg-gray-50 text-gray-900 overflow-hidden font-sans">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col">
-        <div className="h-20 flex items-center px-6 border-b border-slate-800">
-          <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center font-bold text-white tracking-widest mr-3">
+      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div className="h-20 flex items-center px-6 border-b border-gray-200">
+          <div className="w-8 h-8 rounded-lg bg-black flex items-center justify-center font-bold text-white tracking-widest mr-3">
             IG
           </div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+          <h1 className="text-xl font-bold text-black tracking-wide">
             Ignisia Core
           </h1>
         </div>
@@ -30,32 +30,39 @@ export default function DashboardLayout({ children }) {
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 transform group ${
                   isActive 
-                    ? 'bg-brand-600/10 text-brand-400 ' 
-                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                    ? 'bg-black text-white font-semibold shadow-md scale-105 my-1' 
+                    : 'text-gray-600 hover:bg-black hover:text-white hover:scale-105 my-1'
                 }`
               }
             >
-              <item.icon className="w-5 h-5" />
-              <span className="font-medium">{item.label}</span>
+              <item.icon className="w-5 h-5 transition-transform duration-300" />
+              <span>{item.label}</span>
             </NavLink>
           ))}
         </nav>
 
-        <div className="p-6 border-t border-slate-800">
-          <button className="flex items-center space-x-3 text-slate-400 hover:text-white transition-colors w-full">
-            <Settings className="w-5 h-5" />
+        <div className="p-6 border-t border-gray-200">
+          <button className="flex items-center space-x-3 text-gray-600 hover:text-black transition-all duration-300 transform hover:scale-105 w-full group">
+            <Settings className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
             <span className="font-medium">Settings</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content Pane */}
-      <main className="flex-1 flex flex-col overflow-hidden relative">
-        {/* Ambient background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-brand-600/10 blur-[100px] pointer-events-none rounded-full" />
-        
+      <main className="flex-1 flex flex-col overflow-hidden relative bg-gray-50">
+        {/* Navbar */}
+        <header className="h-16 bg-white border-b border-gray-200 shadow-sm flex items-center justify-end px-8 z-20">
+          <div className="flex items-center space-x-4 cursor-pointer">
+            <span className="text-sm font-medium text-gray-600">Admin Area</span>
+            <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center text-xs font-bold text-white">
+              AD
+            </div>
+          </div>
+        </header>
+
         <div className="flex-1 overflow-y-auto p-8 z-10">
           {children}
         </div>
