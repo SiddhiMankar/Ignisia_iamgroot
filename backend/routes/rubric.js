@@ -1,47 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const Rubric = require('../models/Rubric');
+const { protect, authorize } = require('../middleware/auth');
 
 // ── POST /api/rubric ──────────────────────────────────────────────────────────
-// "Build subject creation backend"
-// Faculty creates a new grading rubric and saves it to MongoDB.
-//
-// Request body:
-//   { title, question, keywords: string[], expectedAnswer?, maxScore }
-//
-// Response 201:
-//   { success: true, id, title, message }
-//
-// Response 400:
-//   { success: false, error: string }
-// ─────────────────────────────────────────────────────────────────────────────
-router.post('/', async (req, res) => {
+// Protected route: Only logged in faculty can create rubrics.
+router.post('/', protect, authorize('faculty', 'admin'), async (req, res) => {
     try {
         const { title, question, keywords, expectedAnswer, maxScore } = req.body;
 
-        // ── Basic validation ───────────────────────────────────────────────
         if (!title || !question || !keywords || maxScore === undefined) {
-            return res.status(400).json({
-                success: false,
-                error: 'title, question, keywords, and maxScore are required',
-            });
+            return res.status(400).json({ success: false, error: 'title, question, keywords, and maxScore are required' });
         }
 
         if (!Array.isArray(keywords) || keywords.length === 0) {
-            return res.status(400).json({
-                success: false,
-                error: 'keywords must be a non-empty array of strings',
-            });
+            return res.status(400).json({ success: false, error: 'keywords must be a non-empty array of strings' });
         }
 
-        if (typeof maxScore !== 'number' || maxScore < 1) {
-            return res.status(400).json({
-                success: false,
-                error: 'maxScore must be a positive number',
-            });
-        }
-
-        // ── Save to MongoDB ────────────────────────────────────────────────
         const rubric = await Rubric.create({
             title: title.trim(),
             question: question.trim(),
@@ -50,33 +25,20 @@ router.post('/', async (req, res) => {
             maxScore,
         });
 
-        return res.status(201).json({
-            success: true,
-            id: rubric._id,
-            title: rubric.title,
-            message: `Rubric "${rubric.title}" saved successfully`,
-        });
+        return res.status(201).json({ success: true, id: rubric._id, title: rubric.title, message: `Rubric saved successfully` });
     } catch (err) {
-        // Mongoose validation errors
         if (err.name === 'ValidationError') {
             const messages = Object.values(err.errors).map((e) => e.message);
             return res.status(400).json({ success: false, error: messages.join(', ') });
         }
-        console.error('[POST /api/rubric]', err);
         return res.status(500).json({ success: false, error: 'Internal server error' });
     }
 });
 
 
 // ── GET /api/rubric ───────────────────────────────────────────────────────────
-// "Build assessment selection backend" — LIST
-// Returns a lightweight list of all rubrics for the faculty selection dropdown.
-// Does NOT return keywords/expectedAnswer to keep payload small.
-//
-// Response 200:
-//   { success: true, count: number, rubrics: [{ id, title, question, maxScore, createdAt }] }
-// ─────────────────────────────────────────────────────────────────────────────
-router.get('/', async (req, res) => {
+// Protected route: Only logged in faculty can view the rubric list.
+router.get('/', protect, authorize('faculty', 'admin'), async (req, res) => {
     try {
         const rubrics = await Rubric.find(
             {},
@@ -95,7 +57,6 @@ router.get('/', async (req, res) => {
             })),
         });
     } catch (err) {
-        console.error('[GET /api/rubric]', err);
         return res.status(500).json({ success: false, error: 'Internal server error' });
     }
 });

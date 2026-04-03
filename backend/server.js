@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 
 const connectDB = require('./db');
+const authRouter = require('./routes/auth');
 const rubricRouter = require('./routes/rubric');
 
 dotenv.config();
@@ -18,6 +19,9 @@ app.use(express.json());
 connectDB();
 
 // ── Routes ────────────────────────────────────────────────────────────────────
+
+// Auth CRUD — POST /api/auth/login, POST /api/auth/signup
+app.use('/api/auth', authRouter);
 
 // Rubric CRUD — POST /api/rubric, GET /api/rubric, GET /api/rubric/:id
 app.use('/api/rubric', rubricRouter);
