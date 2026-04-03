@@ -313,7 +313,7 @@ export default function FacultyReview() {
           </div>
 
           {/* Right Half: Scrollable Data Columns */}
-          <div className="w-full xl:w-1/2 flex flex-col space-y-6 overflow-y-auto pr-2 pb-10">
+          <div key={`data-panel-${activeNode.id}`} className="w-full xl:w-1/2 flex flex-col space-y-6 overflow-y-auto pr-2 pb-10 animate-fade-in">
             
             {/* Score Badge Card */}
             <div className={`premium-card flex flex-col items-center justify-center py-10 relative overflow-hidden shrink-0 transition-opacity duration-300 ${activeNode.cluster === 'master' ? 'border-amber-400/50' : ''}`}>
@@ -342,14 +342,14 @@ export default function FacultyReview() {
             </div>
 
             {/* Rubric Match Card */}
-            <div className="premium-card shrink-0 transition-all duration-300">
+            <div className="premium-card shrink-0">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
                 <Layers className="w-5 h-5 mr-2 text-brand-400" /> 
                 Student Analysis
               </h3>
               <div className="space-y-3">
                 {activeNode.keywordsFound?.map((kw, i) => (
-                  <div key={`kw-${i}`} className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <div key={`kw-${i}-${activeNode.id}`} className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                     <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm font-medium text-green-300">Found Keyword: {kw}</p>
@@ -358,7 +358,7 @@ export default function FacultyReview() {
                 ))}
                 
                 {activeNode.missingConcepts?.map((mc, i) => (
-                  <div key={`mc-${i}`} className="flex items-start space-x-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <div key={`mc-${i}-${activeNode.id}`} className="flex items-start space-x-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm font-medium text-red-300">Missing Concept: {mc}</p>
