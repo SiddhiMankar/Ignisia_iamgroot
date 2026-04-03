@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers } from 'lucide-react';
-import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis, CartesianGrid } from 'recharts';
+import { SidebarContext } from '../components/layout/DashboardLayout';
 
 const MOCK_TESTS = [
   { id: 't1', name: 'Data Structures - Midterm', date: '2026-04-01', paperCount: 45 },
@@ -34,6 +35,7 @@ const CustomTooltip = ({ active, payload }) => {
 export default function FacultyReview() {
   const [selectedTest, setSelectedTest] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const { setIsCollapsed } = useContext(SidebarContext);
   
   const [mockData, setMockData] = useState({ clusters: [], keywordsFound: [], missingConcepts: [], semanticNodes: [] });
   const [loading, setLoading] = useState(false);
@@ -41,6 +43,7 @@ export default function FacultyReview() {
   // Fetch data only when a question is finally selected
   useEffect(() => {
     if (selectedQuestion) {
+      setIsCollapsed(true); // Automatically collapse sidebar to make room for charts
       setLoading(true);
       axios.get('http://localhost:5001/api/reviews/mock')
         .then(res => {
@@ -51,16 +54,20 @@ export default function FacultyReview() {
           console.error(err);
           setLoading(false);
         });
+    } else {
+      setIsCollapsed(false); // Restore sidebar width when leaving
     }
-  }, [selectedQuestion]);
+  }, [selectedQuestion, setIsCollapsed]);
 
   const handleBackToTests = () => {
     setSelectedTest(null);
     setSelectedQuestion(null);
+    setIsCollapsed(false);
   };
 
   const handleBackToQuestions = () => {
     setSelectedQuestion(null);
+    setIsCollapsed(false);
   };
 
   // --- STEP 1: Select Test ---
@@ -183,39 +190,44 @@ export default function FacultyReview() {
         </div>
       </header>
 
-      {/* 2D Semantic Distribution Map */}
-      <div className="col-span-12 premium-card mt-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold text-white">Semantic AI Distance Map</h3>
-          <p className="text-sm text-slate-400">FAISS dimensionality reduction. Nodes mapped by contextual distance from the master Rubric vector.</p>
-        </div>
-        <div className="h-64 w-full mix-blend-screen">
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-              <XAxis type="number" dataKey="x" hide domain={[-300, 300]} />
-              <YAxis type="number" dataKey="y" hide domain={[-300, 300]} />
-              <ZAxis range={[100, 100]} />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-              {/* Highlight the Master Reference Node with a glowing star */}
-              <Scatter data={masterNode} shape="star" fill="#FFD700" className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse" />
-              {/* Regular Student Answer Nodes */}
-              <Scatter data={studentNodes} shape="circle">
-                {studentNodes.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getClusterColor(entry.cluster)} className="transition-all duration-300 hover:opacity-80 drop-shadow-md" />
-                ))}
-              </Scatter>
-            </ScatterChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
+      {/* Main 2-Column Split Layout */}
       {activeCluster ? (
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Column: AI Logic & Controls */}
-          <div className="col-span-12 xl:col-span-5 space-y-6">
+        <div className="flex flex-col xl:flex-row gap-6 mt-6 h-[calc(100vh-140px)] w-full">
+          
+          {/* Left Half: Fixed 2D Semantic Distribution Map */}
+          <div className="w-full xl:w-1/2 premium-card flex flex-col h-full">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-white">Semantic AI Distance Map</h3>
+              <p className="text-sm text-slate-400">FAISS dimensionality reduction. Nodes mapped by contextual distance from the master Rubric vector.</p>
+            </div>
+            <div className="flex-1 w-full mix-blend-screen min-h-[400px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
+                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-300, 300]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
+                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-300, 300]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
+                  <ZAxis range={[100, 100]} />
+                  <Tooltip cursor={{ strokeDasharray: '3 3', stroke: '#cbd5e1' }} content={<CustomTooltip />} />
+                  
+                  {/* Highlight the Master Reference Node with a glowing star */}
+                  <Scatter data={masterNode} shape="star" fill="#FFD700" className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse" />
+                  
+                  {/* Regular Student Answer Nodes */}
+                  <Scatter data={studentNodes} shape="circle">
+                    {studentNodes.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={getClusterColor(entry.cluster)} className="transition-all duration-300 hover:opacity-80 drop-shadow-md" />
+                    ))}
+                  </Scatter>
+                </ScatterChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Right Half: Scrollable Data Columns */}
+          <div className="w-full xl:w-1/2 flex flex-col space-y-6 overflow-y-auto pr-2 pb-10">
             
             {/* Score Badge Card */}
-            <div className="premium-card flex flex-col items-center justify-center py-10 relative overflow-hidden">
+            <div className="premium-card flex flex-col items-center justify-center py-10 relative overflow-hidden shrink-0">
                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                  <BrainCircuit className="w-32 h-32" />
                </div>
@@ -232,7 +244,7 @@ export default function FacultyReview() {
             </div>
 
             {/* Rubric Match Card */}
-            <div className="premium-card">
+            <div className="premium-card shrink-0">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
                 <Layers className="w-5 h-5 mr-2 text-brand-400" /> 
                 Rubric Analysis
@@ -263,7 +275,7 @@ export default function FacultyReview() {
             </div>
 
             {/* Action Bar */}
-            <div className="premium-card bg-brand-600/5 hover:border-brand-500/50">
+            <div className="premium-card bg-brand-600/5 hover:border-brand-500/50 shrink-0">
               <h3 className="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wide">Finalize Grade</h3>
               <div className="flex space-x-4">
                 <input 
@@ -277,11 +289,8 @@ export default function FacultyReview() {
               </div>
             </div>
 
-          </div>
-
-          {/* Right Column: Original Answers Viewer */}
-          <div className="col-span-12 xl:col-span-7 space-y-6">
-            <div className="premium-card h-full flex flex-col">
+            {/* Original Answers Viewer */}
+            <div className="premium-card flex flex-col shrink-0 min-h-[400px]">
               <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
                 <h3 className="text-lg font-semibold text-white flex items-center">
                   <FileText className="w-5 h-5 mr-2 text-slate-400" />
@@ -292,7 +301,7 @@ export default function FacultyReview() {
                 </span>
               </div>
               
-              <div className="flex-1 space-y-4 overflow-y-auto pr-2">
+              <div className="flex-1 space-y-4">
                 {activeCluster.answers.map((ans, idx) => (
                   <div key={idx} className="p-5 rounded-xl bg-slate-950 border border-slate-800 group hover:border-slate-700 transition-colors">
                     <p className="text-slate-300 leading-relaxed text-lg font-light">
@@ -306,6 +315,7 @@ export default function FacultyReview() {
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       ) : (
