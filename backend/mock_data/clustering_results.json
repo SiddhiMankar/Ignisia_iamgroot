@@ -1,0 +1,49 @@
+{
+  "rubricTitle": "Midterm Q1 - Stack vs Queue",
+  "keywordsFound": ["LIFO", "FIFO", "Stack", "Queue", "O(1)"],
+  "missingConcepts": ["Push/Pop constraints"],
+  "clusters": [
+    {
+      "id": "c1-perfect",
+      "answers": [
+        "A stack operates on a LIFO principle where the last element is the first out. A queue uses FIFO.",
+        "Stack is LIFO. Therefore the most recent item added is the first to be removed. Queue is strictly FIFO.",
+        "The LIFO model dictates stack behavior (like plates). Queue is FIFO (like a line)."
+      ],
+      "suggestedScore": 10,
+      "confidence": 0.98,
+      "feedbackSummary": "Perfect definitions of LIFO/FIFO with correct physical analogies."
+    },
+    {
+      "id": "c2-partial",
+      "answers": [
+        "Stack is LIFO, I'm not sure about Queue.",
+        "A stack is LIFO. It takes O(1) time. Queue is something else.",
+        "Stack uses the LIFO method to add data."
+      ],
+      "suggestedScore": 5,
+      "confidence": 0.82,
+      "feedbackSummary": "Recognizes Stack LIFO concept but fails to define Queue."
+    },
+    {
+      "id": "c3-edgecases-math",
+      "answers": [
+        "Stack = Queue + 2 * LIFO / n",
+        "Stack = 10, Queue = 5"
+      ],
+      "suggestedScore": 0,
+      "confidence": 0.99,
+      "feedbackSummary": "Math anomaly detected! Expected text explanation, found erroneous formula."
+    },
+    {
+      "id": "c4-hindi",
+      "answers": [
+        "Stack LIFO use karta hai, aur Queue FIFO use karta hai.",
+        "Stack LIFO ke principle par chalta hai. Queue FIFO par."
+      ],
+      "suggestedScore": 10,
+      "confidence": 0.88,
+      "feedbackSummary": "Hindi/Hinglish translation matches accurate technical definitions natively."
+    }
+  ]
+}

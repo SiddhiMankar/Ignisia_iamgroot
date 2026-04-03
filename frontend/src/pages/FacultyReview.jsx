@@ -3,14 +3,14 @@ import axios from 'axios';
 import { ChevronRight, Check, X, AlertCircle, BrainCircuit } from 'lucide-react';
 
 export default function FacultyReview() {
-  const [clusters, setClusters] = useState([]);
+  const [mockData, setMockData] = useState({ clusters: [], keywordsFound: [], missingConcepts: [] });
   const [loading, setLoading] = useState(true);
 
   // Fetch the mock data from our node backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reviews/mock')
+    axios.get('http://localhost:5001/api/reviews/mock')
       .then(res => {
-        setClusters(res.data.clusters);
+        setMockData(res.data);
         setLoading(false);
       })
       .catch(err => {
@@ -28,6 +28,7 @@ export default function FacultyReview() {
   }
 
   // Active viewing cluster
+  const clusters = mockData.clusters || [];
   const activeCluster = clusters[0] || null;
 
   return (
@@ -74,19 +75,26 @@ export default function FacultyReview() {
             <div className="premium-card">
               <h3 className="text-lg font-semibold text-white mb-4">Rubric Analysis</h3>
               <div className="space-y-3">
-                <div className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-green-300">Keyword Found: Gravity</p>
-                    <p className="text-xs text-slate-400 mt-1">Found in 100% of answers in this cluster.</p>
+                {mockData.keywordsFound?.map((kw, i) => (
+                  <div key={`kw-${i}`} className="flex items-start space-x-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                    <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-green-300">Keyword Highlighted: {kw}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start space-x-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                  <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-red-300">Missing Concept: Friction</p>
-                    <p className="text-xs text-slate-400 mt-1">Formula derivation missing required variable.</p>
+                ))}
+                
+                {mockData.missingConcepts?.map((mc, i) => (
+                  <div key={`mc-${i}`} className="flex items-start space-x-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <X className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-red-300">Missing Concept: {mc}</p>
+                    </div>
                   </div>
+                ))}
+                
+                <div className="mt-4 p-3 bg-brand-500/10 border border-brand-500/20 rounded-lg">
+                  <p className="text-sm text-brand-300"><b>AI Note:</b> {activeCluster.feedbackSummary}</p>
                 </div>
               </div>
             </div>
@@ -125,10 +133,10 @@ export default function FacultyReview() {
                 {activeCluster.answers.map((ans, idx) => (
                   <div key={idx} className="p-5 rounded-xl bg-slate-950 border border-slate-800 group hover:border-slate-700 transition-colors">
                     <p className="text-slate-300 leading-relaxed text-lg font-light">
-                      {/* Fake highlight for demo wow-factor */}
-                      {ans.split(/(gravity)/i).map((part, i) => 
-                        part.toLowerCase() === 'gravity' 
-                          ? <span key={i} className="text-green-400 bg-green-400/10 px-1 rounded">{part}</span>
+                      {/* Dynamic highlight for demo wow-factor */}
+                      {ans.split(/(LIFO|FIFO|Stack|Queue)/i).map((part, i) => 
+                        /LIFO|FIFO|Stack|Queue/i.test(part) 
+                          ? <span key={i} className="text-green-400 bg-green-400/10 px-1 rounded font-medium">{part}</span>
                           : part
                       )}
                     </p>

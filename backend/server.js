@@ -9,7 +9,7 @@ const rubricRouter = require('./routes/rubric');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
@@ -28,16 +28,7 @@ app.use('/api/rubric', rubricRouter);
 
 // Mock Evaluation Route (keeps frontend unblocked during dev)
 app.get('/api/reviews/mock', (req, res) => {
-    res.json({
-        clusters: [
-            {
-                id: 'c1',
-                answers: ['It accelerates down via gravity', 'Gravity acceleration'],
-                suggestedScore: 5,
-                confidence: 0.95,
-            },
-        ],
-    });
+    res.sendFile(require('path').join(__dirname, 'mock_data', 'clustering_results.json'));
 });
 
 // Health check
