@@ -23,9 +23,18 @@ const rubricSchema = new mongoose.Schema(
             trim: true,
         },
 
+        keywords: {
+            type: [String],
+            required: [true, 'At least one keyword is required'],
+            validate: {
+                validator: (arr) => Array.isArray(arr) && arr.length > 0,
+                message: 'keywords must be a non-empty array',
+            },
+        },
+
         pdfPath: {
             type: String,
-            required: [true, 'A PDF Rubric file path is required'],
+            required: [true, 'Rubric PDF file path is required'],
         },
 
         maxScore: {

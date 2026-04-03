@@ -2,43 +2,53 @@ const express = require('express');
 const router = express.Router();
 const Rubric = require('../models/Rubric');
 const { protect, authorize } = require('../middleware/auth');
-const upload = require('../middleware/upload');
+const { uploadRubric } = require('../middleware/upload');
 
-// ── POST /api/rubric ──────────────────────────────────────────────────────────
-// Protected route: Only logged in faculty can upload a rubric PDF.
-// Uses Multer middleware to accept the 'rubricFile' payload.
-router.post('/', protect, authorize('faculty', 'admin'), upload.single('rubricFile'), async (req, res) => {
+// ── POST /api/rubric/upload ───────────────────────────────────────────────────
+// Protected route: Only logged in faculty can create rubrics.
+// Expects: form-data with `title`, `question`, `keywords` (stringified array or comma-separated), `maxScore`, and `rubricFile` (PDF).
+router.post('/upload', protect, authorize('faculty', 'admin'), uploadRubric.single('rubricFile'), async (req, res) => {
     try {
-        const { title, question, maxScore } = req.body;
-
-        if (!title || !question || maxScore === undefined) {
-            return res.status(400).json({ success: false, error: 'title, question, and maxScore are required text fields' });
+        if (!req.file) {
+            return res.status(400).json({ success: false, error: 'A Rubric PDF file is required' });
         }
 
-        if (!req.file) {
-            return res.status(400).json({ success: false, error: 'A PDF rubricFile is strictly required' });
+        const { title, question, maxScore } = req.body;
+        let { keywords } = req.body;
+
+        if (!title || !question || !keywords || maxScore === undefined) {
+            return res.status(400).json({ success: false, error: 'title, question, keywords, and maxScore are required' });
+        }
+
+        // Handle stringified arrays from form-data
+        if (typeof keywords === 'string') {
+            try {
+                keywords = JSON.parse(keywords);
+            } catch (e) {
+                // assume comma separated
+                keywords = keywords.split(',');
+            }
+        }
+
+        if (!Array.isArray(keywords) || keywords.length === 0) {
+            return res.status(400).json({ success: false, error: 'keywords must be a non-empty array of strings' });
         }
 
         const rubric = await Rubric.create({
             title: title.trim(),
             question: question.trim(),
-            pdfPath: req.file.path, // Store the local path so ML team can access it
+            keywords: keywords.map((k) => k.trim()).filter(Boolean),
+            pdfPath: req.file.path,
             maxScore: Number(maxScore),
         });
 
-        return res.status(201).json({ 
-            success: true, 
-            id: rubric._id, 
-            title: rubric.title, 
-            pdfPath: rubric.pdfPath,
-            message: `Rubric PDF saved successfully` 
-        });
+        return res.status(201).json({ success: true, id: rubric._id, title: rubric.title, message: `Rubric saved successfully` });
     } catch (err) {
         if (err.name === 'ValidationError') {
             const messages = Object.values(err.errors).map((e) => e.message);
             return res.status(400).json({ success: false, error: messages.join(', ') });
         }
-        return res.status(500).json({ success: false, error: err.message || 'Internal server error' });
+        return res.status(500).json({ success: false, error: 'Internal server error' });
     }
 });
 
@@ -49,7 +59,7 @@ router.get('/', protect, authorize('faculty', 'admin'), async (req, res) => {
     try {
         const rubrics = await Rubric.find(
             {},
-            { title: 1, question: 1, maxScore: 1, pdfPath: 1, createdAt: 1 }
+            { title: 1, question: 1, maxScore: 1, createdAt: 1 }
         ).sort({ createdAt: -1 });
 
         return res.status(200).json({
@@ -60,7 +70,6 @@ router.get('/', protect, authorize('faculty', 'admin'), async (req, res) => {
                 title: r.title,
                 question: r.question,
                 maxScore: r.maxScore,
-                pdfPath: r.pdfPath, // Provides the path for the frontend/ML to reference
                 createdAt: r.createdAt,
             })),
         });
@@ -95,7 +104,8 @@ router.get('/:id', async (req, res) => {
                 id: rubric._id,
                 title: rubric.title,
                 question: rubric.question,
-                pdfPath: rubric.pdfPath, // Provides the path for the ML team to access the PDF
+                keywords: rubric.keywords,
+                pdfPath: rubric.pdfPath,
                 maxScore: rubric.maxScore,
                 createdAt: rubric.createdAt,
             },
