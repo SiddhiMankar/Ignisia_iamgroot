@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { ChevronRight, Check, X, AlertCircle, BrainCircuit, FileText, ArrowLeft, BookOpen, Layers, ZoomIn, ZoomOut, Maximize } from 'lucide-react';
-import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis, CartesianGrid } from 'recharts';
+import { ScatterChart, Scatter, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ZAxis, CartesianGrid, ReferenceLine } from 'recharts';
 import { SidebarContext } from '../components/layout/DashboardLayout';
 
 const MOCK_TESTS = [
@@ -260,8 +260,26 @@ export default function FacultyReview() {
                   <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[pan.x - zoomDomain, pan.x + zoomDomain]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
                   <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[pan.y - zoomDomain, pan.y + zoomDomain]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
                   <ZAxis range={[300, 300]} />
-                  <Tooltip cursor={{ strokeDasharray: '3 3', stroke: '#cbd5e1' }} content={<CustomTooltip />} />
+                  {/* Disable standard generic cartesian crosshairs */}
+                  <Tooltip cursor={false} content={<CustomTooltip />} />
                   
+                  {/* Dynamic Tether: Draws a line from the cluster to the Master reference! */}
+                  {activeNode && activeNode.cluster !== 'master' && (
+                     <ReferenceLine 
+                       segment={[{ x: 0, y: 0 }, { x: activeNode.x, y: activeNode.y }]} 
+                       stroke={getClusterColor(activeNode.cluster)} 
+                       strokeDasharray="6 6"
+                       strokeWidth={2}
+                       label={{ 
+                         value: `${Math.round(activeNode.confidence * 100)}% Match`, 
+                         fill: getClusterColor(activeNode.cluster),
+                         fontSize: 14,
+                         fontWeight: 'bold',
+                         position: 'insideTopLeft'
+                       }}
+                     />
+                  )}
+
                   {/* Highlight the Master Reference Node with a glowing star */}
                   <Scatter 
                     name="Master" 
