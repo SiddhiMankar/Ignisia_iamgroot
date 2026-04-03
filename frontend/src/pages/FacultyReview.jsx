@@ -40,7 +40,45 @@ export default function FacultyReview() {
   const [mockData, setMockData] = useState({ clusters: [], semanticNodes: [] });
   const [activeNode, setActiveNode] = useState(null);
   const [zoomDomain, setZoomDomain] = useState(300);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [loading, setLoading] = useState(false);
+
+  // Handle Trackpad Scroll to Zoom
+  const handleWheel = (e) => {
+    // Only zoom if delta is significant to avoid twitching
+    if (Math.abs(e.deltaY) > 2) {
+      setZoomDomain(prev => Math.max(50, Math.min(800, prev + (e.deltaY > 0 ? 25 : -25))));
+    }
+  };
+
+  // Handle Click & Drag to Pan
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const dx = e.clientX - dragStart.x;
+      const dy = e.clientY - dragStart.y;
+      // Rough pixel-to-domain scaling
+      const scale = (zoomDomain * 2) / 400; 
+      setPan(prev => ({ 
+        x: prev.x - dx * scale, 
+        y: prev.y + dy * scale // Y is inverted in Recharts
+      }));
+      setDragStart({ x: e.clientX, y: e.clientY });
+    }
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  const resetView = () => {
+    setZoomDomain(300);
+    setPan({ x: 0, y: 0 });
+  };
 
   // Fetch data only when a question is finally selected
   useEffect(() => {
@@ -199,21 +237,28 @@ export default function FacultyReview() {
                 <button onClick={() => setZoomDomain(prev => Math.max(50, prev - 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom In">
                   <ZoomIn className="w-4 h-4" />
                 </button>
-                <button onClick={() => setZoomDomain(prev => Math.min(400, prev + 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom Out">
+                <button onClick={() => setZoomDomain(prev => Math.min(800, prev + 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom Out">
                   <ZoomOut className="w-4 h-4" />
                 </button>
-                <button onClick={() => setZoomDomain(300)} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Reset Zoom">
+                <button onClick={resetView} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Reset Zoom & Center">
                   <Maximize className="w-4 h-4" />
                 </button>
               </div>
             </header>
             
-            <div className="flex-1 w-full mix-blend-screen min-h-[400px]">
-              <ResponsiveContainer width="100%" height="100%">
+            <div 
+              className={`flex-1 w-full mix-blend-screen min-h-[400px] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              onWheel={handleWheel}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              <ResponsiveContainer width="100%" height="100%" style={{ pointerEvents: 'none' }}>
                 <ScatterChart margin={{ top: 20, right: 30, bottom: 20, left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
-                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-zoomDomain, zoomDomain]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
-                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[-zoomDomain, zoomDomain]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
+                  <XAxis type="number" dataKey="x" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[pan.x - zoomDomain, pan.x + zoomDomain]} label={{ value: 'Semantic Drift (X)', position: 'insideBottomRight', offset: -10, fill: '#64748b', fontSize: 12 }} />
+                  <YAxis type="number" dataKey="y" stroke="#475569" tick={{fill: '#94a3b8'}} domain={[pan.y - zoomDomain, pan.y + zoomDomain]} label={{ value: 'Contextual Variance (Y)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }} />
                   <ZAxis range={[300, 300]} />
                   <Tooltip cursor={{ strokeDasharray: '3 3', stroke: '#cbd5e1' }} content={<CustomTooltip />} />
                   
@@ -223,6 +268,7 @@ export default function FacultyReview() {
                     data={masterNode} 
                     shape="star" 
                     fill="#FFD700" 
+                    style={{ pointerEvents: 'auto' }}
                     className="drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse cursor-pointer" 
                     onMouseEnter={() => {
                         if (masterNode.length > 0) setActiveNode(masterNode[0]);
@@ -230,14 +276,14 @@ export default function FacultyReview() {
                   />
                   
                   {/* Regular Student Answer Nodes */}
-                  <Scatter name="Students" data={studentNodes} shape="circle">
+                  <Scatter name="Students" data={studentNodes} shape="circle" style={{ pointerEvents: 'auto' }}>
                     {studentNodes.map((entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={getClusterColor(entry.cluster)} 
                         className="transition-all duration-300 drop-shadow-md cursor-pointer hover:opacity-100 opacity-80" 
                         onMouseEnter={() => setActiveNode(entry)}
-                        onClick={() => setActiveNode(entry)}
+                        onClick={(e) => { e.stopPropagation(); setActiveNode(entry); }}
                         stroke={activeNode?.id === entry.id ? '#ffffff' : 'none'}
                         strokeWidth={activeNode?.id === entry.id ? 4 : 0}
                       />
