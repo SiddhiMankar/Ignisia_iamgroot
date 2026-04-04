@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import FacultyReview from './pages/FacultyReview';
@@ -8,6 +8,11 @@ import EvaluationSessionBuilder from './pages/EvaluationSessionBuilder';
 import Dashboard from './pages/Dashboard';
 import Results from './pages/Results';
 import Grading from './pages/Grading';
+import FacultySetup from './pages/FacultySetup';
+import StudentExtraction from './pages/StudentExtraction';
+import EvaluationResults from './pages/EvaluationResults';
+import ClusterAnalysis from './pages/ClusterAnalysis';
+
 // Placeholder empty page for other routes
 const Placeholder = ({ title }) => (
   <div className="bg-surface border border-outline-variant rounded-xl flex flex-col items-center justify-center h-64 text-center shadow-sm">
@@ -24,6 +29,13 @@ const DashboardWrapper = () => (
 );
 
 function App() {
+  // Global Workflow State
+  // We lift state up here so that when faculty parses a rubric, it is available for evaluation later.
+  const [activeRubric, setActiveRubric] = useState(null);
+  const [studentAnswers, setStudentAnswers] = useState([]);
+  const [evaluatedPayloads, setEvaluatedPayloads] = useState([]);
+
+  // Provide state tightly through contexts or passing props, here we will pass props for simplicity
   return (
     <BrowserRouter>
       <Routes>
@@ -32,7 +44,8 @@ function App() {
         
         {/* Protected routes wrapped in the dashboard layout */}
         <Route element={<DashboardWrapper />}>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/faculty-setup" replace />} />
+          
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/exams" element={<EvaluationSessionBuilder />} />
           <Route path="/upload" element={<UploadSheets />} />
@@ -40,11 +53,28 @@ function App() {
           <Route path="/results" element={<Results />} />
           <Route path="/grading" element={<Grading />} />
           <Route path="/analytics" element={<Placeholder title="Analytics Engine" />} />
+          
+          {/* New ML Team Routes */}
+          <Route 
+            path="/faculty-setup" 
+            element={<FacultySetup activeRubric={activeRubric} setActiveRubric={setActiveRubric} />} 
+          />
+          <Route 
+            path="/student-extraction" 
+            element={<StudentExtraction activeRubric={activeRubric} studentAnswers={studentAnswers} setStudentAnswers={setStudentAnswers} />} 
+          />
+          <Route 
+            path="/evaluation-results" 
+            element={<EvaluationResults activeRubric={activeRubric} evaluatedPayloads={evaluatedPayloads} setEvaluatedPayloads={setEvaluatedPayloads} />} 
+          />
+          <Route 
+            path="/cluster-analysis" 
+            element={<ClusterAnalysis evaluatedPayloads={evaluatedPayloads} />} 
+          />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
 
 export default App;

@@ -2,8 +2,8 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure the local uploads directory exists
-const uploadDir = path.join(__dirname, '../../../uploads');
+// Always resolve to an absolute path regardless of where node is run from
+const uploadDir = path.resolve(__dirname, '..', '..', '..', 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
