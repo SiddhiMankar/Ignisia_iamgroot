@@ -1,0 +1,11 @@
+{
+  "student_id": "sample_01",
+  "file_name": "a_1 question sheet handwritten.pdf",
+  "expected_topic": "a_1",
+  "ocr_text_preview": "1, Photosunneis L te Drokess bl klhich Dlants Make_foed' Plans (Ke and Ildtey to_mate Enalakn foed ;, dioxide_ds_podued d ds Dce(,...",
+  "parsed_answers": {
+    "Q1": "Photosunneis L te Drokess bl klhich Dlants Make_foed' Plans (Ke and Ildtey to_mate Enalakn foed ;, dioxide_ds_podued d ds Dce(,"
+  },
+  "similarity_score": 0.189,
+  "likely_match": false
+}

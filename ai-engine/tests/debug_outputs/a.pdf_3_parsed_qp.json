@@ -1,0 +1,22 @@
+{
+  "Q1": {
+    "question_text": "What is photosynthesis?",
+    "marks": 2
+  },
+  "Q2": {
+    "question_text": "What is evaporation?Rubric",
+    "marks": 2
+  },
+  "Q3": {
+    "question_text": "What is a habitat?",
+    "marks": 3
+  },
+  "Q4": {
+    "question_text": "What is a fraction?",
+    "marks": 3
+  },
+  "Q5": {
+    "question_text": "What is a democracy?",
+    "marks": 2
+  }
+}

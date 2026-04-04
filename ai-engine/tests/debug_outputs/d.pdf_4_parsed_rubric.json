@@ -1,0 +1,62 @@
+{
+  "Q1": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Identify and correct the error",
+      "Error identified (“don’t” incorrect)",
+      "Correct verb form “doesn’t”",
+      "Full corrected sentence:"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Fill in the blank (Tense)",
+      "Correct tense identified (future perfect)",
+      "Correct form: “will have completed”",
+      "“will have completed” (3)"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q3": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Change to passive voice",
+      "Object correctly identified (concept)",
+      "Correct passive structure used",
+      "Correct answer:",
+      "“The concept was explained clearly by the teacher.” (2)",
+      "“The concept was explained clearly by the teacher.” (2)"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 3,
+    "keywords": [],
+    "expected_concepts": [
+      "Choose the correct word",
+      "Correct answer: “stronger”"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Rewrite with proper punctuation",
+      "Capitalization (“What”)",
+      "Question mark",
+      "Full correct sentence"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

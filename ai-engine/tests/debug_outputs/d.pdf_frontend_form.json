@@ -1,0 +1,17 @@
+{
+  "sessionTitle": "d",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "​D] GRAMMAR​\n​Q1. Identify and correct the error​\n​“She don’t like playing football.”​\n​Rubric (5 marks):​\n​●​\n​Error identified (“don’t” incorrect) (2)​\n​●​\n​Correct verb form “doesn’t” (2)​\n​●​\n​Full corrected sentence:​\n​“She doesn’t like playing football.” (1)​\n​Q2. Fill in the blank (Tense)​\n​By next year, I ______ (complete) my degree.​\n​Rubric (5 marks):​\n​●​\n​Correct tense identified (future perfect) (2)​\n​●​\n​Correct form: “will have completed” (3)​\n​Q3. Change to passive voice​\n​“The teacher explained the concept clearly.”​\n​Rubric (5 marks):​\n​●​\n​Object correctly identified (concept) (1)​\n​●​\n​Correct passive structure used (2)​\n​●​\n​Correct answer:​\n​“The concept was explained clearly by the teacher.” (2)​\n​Q4. Choose the correct word​\n​He is ______ (strong/stronger/strongest) than his brother.​\n​Rubric (3 marks):​\n​●​\n​Correct answer: “stronger” (3)​\n​Q5. Rewrite with proper punctuation​\n​“what are you doing now”​\n​Rubric (5 marks):​\n​●​\n​Capitalization (“What”) (2)​\n​●​\n​Question mark (2)​\n​●​\n​Full correct sentence (1)​",
+      "marks": 5,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "​D] GRAMMAR​ ​Q1. Identify and correct the error​ ​“She don’t like playing football.”​ ​Rubric (5 marks):​ ​●​ ​Error identified (“don’t” incorrect) (2)​ ​●​ ​Correct verb form “doesn’t” (2)​ ​●​ ​Full corrected sentence:​ ​“She doesn’t like playing football.” (1)​ ​Q2. Fill in the blank (Tense)​ ​By next year, I ______ (complete) my degree.​ ​Rubric (5 marks):​ ​●​ ​Correct tense identified (future perfect) (2)​ ​●​ ​Correct form: “will have completed” (3)​ ​Q3. Change to passive voice​ ​“The teacher explained the concept clearly.”​ ​Rubric (5 marks):​ ​●​ ​Object correctly identified (concept) (1)​ ​●​ ​Correct passive structure used (2)​ ​●​ ​Correct answer:​ ​“The concept was explained clearly by the teacher.” (2)​ ​Q4. Choose the correct word​ ​He is ______ (strong/stronger/strongest) than his brother.​ ​Rubric (3 marks):​ ​●​ ​Correct answer: “stronger” (3)​ ​Q5. Rewrite with proper punctuation​ ​“what are you doing now”​ ​Rubric (5 marks):​ ​●​ ​Capitalization (“What”) (2)​ ​●​ ​Question mark (2)​ ​●​ ​Full correct sentence (1)​",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

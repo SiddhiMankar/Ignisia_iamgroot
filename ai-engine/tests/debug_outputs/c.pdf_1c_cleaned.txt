@@ -1,0 +1,27 @@
+C] COMPARISON (5 marks each)
+1) Differentiate between plant cell and animal cell.
+Rubric:
+• Cell wall present in plant cell (2)
+• Chloroplast present in plant cell (1)
+• Shape/structure difference (1)
+• Any valid additional difference (1)
+2) Difference between solids, liquids, and gases.
+Rubric:
+• Shape difference (2)
+• Volume/property difference (2)
+• Particle movement / flow difference (1)
+3) Difference between weather and climate.
+Rubric:
+• Weather = short-term condition (2)
+• Climate = long-term pattern (2)
+• Example/context (1)
+4) Difference between area and perimeter.
+Rubric:
+• Area = inside space (2)
+• Perimeter = boundary length (2)
+• Formula/example (1)
+5) Difference between herbivores and carnivores.
+Rubric:
+• Herbivores eat plants (2)
+• Carnivores eat animals/meat (2)
+• Example (1)

@@ -1,0 +1,63 @@
+{
+  "Q1": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Differentiate between plant cell and animal cell.",
+      "Cell wall present in plant cell",
+      "Chloroplast present in plant cell",
+      "Shape/structure difference",
+      "Any valid additional difference"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Difference between solids, liquids, and gases.",
+      "Shape difference",
+      "Volume/property difference",
+      "Particle movement / flow difference"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q3": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Difference between weather and climate.",
+      "Weather = short-term condition",
+      "Climate = long-term pattern",
+      "Example/context"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Difference between area and perimeter.",
+      "Area = inside space",
+      "Perimeter = boundary length",
+      "Formula/example"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Difference between herbivores and carnivores.",
+      "Herbivores eat plants",
+      "Carnivores eat animals/meat",
+      "Example"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

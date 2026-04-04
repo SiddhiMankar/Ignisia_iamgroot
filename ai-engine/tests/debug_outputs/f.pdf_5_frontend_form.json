@@ -1,0 +1,135 @@
+{
+  "sessionTitle": "f",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "Speed",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Speed = Distance / Time",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "60 / 2 = 30",
+          "weight": 2
+        },
+        {
+          "type": "Final Answer Match",
+          "description": "30 km/h",
+          "weight": 2
+        },
+        {
+          "type": "Step Match",
+          "description": "Distance = 60 km, Time = 2 hours",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q2",
+      "questionPrompt": "Area of Circle",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Area = πr²",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "(22/7) × 7 × 7 = 154",
+          "weight": 2
+        },
+        {
+          "type": "Final Answer Match",
+          "description": "154 cm²",
+          "weight": 2
+        },
+        {
+          "type": "Step Match",
+          "description": "r = 7 cm",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q3",
+      "questionPrompt": "Simple Interest",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "SI = (P × R × T) / 100",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "(1000 × 5 × 2) / 100 = 100",
+          "weight": 2
+        },
+        {
+          "type": "Final Answer Match",
+          "description": "₹100",
+          "weight": 2
+        },
+        {
+          "type": "Step Match",
+          "description": "P = 1000, R = 5%, T = 2",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q4",
+      "questionPrompt": "Linear Equation",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Step Match",
+          "description": "2x = 15 − 5 = 10",
+          "weight": 1
+        },
+        {
+          "type": "Step Match",
+          "description": "x = 10 / 2 = 5",
+          "weight": 1
+        },
+        {
+          "type": "Final Answer Match",
+          "description": "x = 5",
+          "weight": 2
+        },
+        {
+          "type": "Step Match",
+          "description": "2x + 5 = 15",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q5",
+      "questionPrompt": "Percentage",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Percentage = (Marks / Total) × 100",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "(45 / 60) × 100 = 75",
+          "weight": 2
+        },
+        {
+          "type": "Step Match",
+          "description": "45 out of",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

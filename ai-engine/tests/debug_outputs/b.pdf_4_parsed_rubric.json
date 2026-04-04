@@ -1,0 +1,63 @@
+{
+  "Q1": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Why is mitochondria called the powerhouse of the cell?",
+      "Produces energy",
+      "Produces ATP / energy for cell activities",
+      "Called powerhouse because it supplies energy"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Explain the process of photosynthesis.",
+      "Plants use sunlight",
+      "Carbon dioxide + water involved",
+      "Food/glucose formed",
+      "Oxygen released"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q3": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Why do we need water in daily life?",
+      "Drinking/body function",
+      "Cooking/cleaning/hygiene",
+      "Survival importance"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Explain how the water cycle works.",
+      "Evaporation",
+      "Condensation",
+      "Precipitation/rain",
+      "Repetition as cycle"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "Why do objects fall to the ground?",
+      "Gravity mentioned",
+      "Earth pulls objects downward"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

@@ -1,0 +1,5 @@
+Q1 @ char 70
+Q2 @ char 219
+Q3 @ char 341
+Q4 @ char 447
+Q5 @ char 550

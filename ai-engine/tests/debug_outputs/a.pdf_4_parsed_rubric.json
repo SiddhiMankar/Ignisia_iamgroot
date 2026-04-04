@@ -1,0 +1,59 @@
+{
+  "Q1": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "What is photosynthesis?",
+      "Process by which plants make food",
+      "Uses sunlight",
+      "Uses carbon dioxide and water / produces oxygen"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 3,
+    "keywords": [],
+    "expected_concepts": [
+      "What is evaporation?Rubric:",
+      "Liquid changes into gas/vapour (2)Due to heat / temperature",
+      "Example or context"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q3": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "What is a habitat?",
+      "Natural home/environment of organism",
+      "Supports living / survival"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "What is a fraction?",
+      "Represents part of a whole",
+      "Written as numerator/denominator"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 5,
+    "keywords": [],
+    "expected_concepts": [
+      "What is a democracy?",
+      "Government by people",
+      "People choose leaders / voting",
+      "Public participation mention"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

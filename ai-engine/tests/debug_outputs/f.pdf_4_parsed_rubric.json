@@ -1,0 +1,87 @@
+{
+  "Q1": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Speed",
+      "Formula: Speed = Distance / Time",
+      "Substitution: 60 / 2 = 30",
+      "Final Answer: 30 km/h",
+      "Formula: Speed = Distance / Time",
+      "Formula: Speed = Distance / Time",
+      "Substitution: 60 / 2 = 30",
+      "Final Answer: 30 km/h",
+      "[GIVEN] Distance = 60 km, Time = 2 hours"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Area of Circle",
+      "Formula: Area = πr²",
+      "Substitution: (22/7) × 7 × 7 = 154",
+      "inal Answer: 154 cm²",
+      "Formula: Area = πr²",
+      "Formula: Area = πr²",
+      "Substitution: (22/7) × 7 × 7 = 154",
+      "inal Answer: 154 cm²",
+      "[GIVEN] r = 7 cm"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q3": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Simple Interest",
+      "Formula: SI = (P × R × T) / 100",
+      "Substitution: (1000 × 5 × 2) / 100 = 100",
+      "Final Answer: ₹100",
+      "Formula: SI = (P × R × T) / 100",
+      "Formula: SI = (P × R × T) / 100",
+      "Substitution: (1000 × 5 × 2) / 100 = 100",
+      "Final Answer: ₹100",
+      "[GIVEN] P = 1000, R = 5%, T = 2"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Linear Equation",
+      "Step 1: 2x = 15 − 5 = 10",
+      "Step 2: x = 10 / 2 = 5",
+      "Final Answer: x = 5",
+      "Step 1: 2x = 15 − 5 = 10",
+      "Step 1: 2x = 15 − 5 = 10",
+      "Step 2: x = 10 / 2 = 5",
+      "Final Answer: x = 5",
+      "[GIVEN] 2x + 5 = 15"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Percentage",
+      "Formula: Percentage = (Marks / Total) × 100",
+      "Substitution: (45 / 60) × 100 = 75",
+      "Final Answer: 75",
+      "Formula: Percentage = (Marks / Total) × 100",
+      "Formula: Percentage = (Marks / Total) × 100",
+      "Substitution: (45 / 60) × 100 = 75",
+      "Final Answer: 75",
+      "[GIVEN] 45 out of 60"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "Q1": {
+    "question_text": "Differentiate between plant cell and animal cell.",
+    "marks": 2
+  },
+  "Q2": {
+    "question_text": "Difference between solids, liquids, and gases.",
+    "marks": 2
+  },
+  "Q3": {
+    "question_text": "Difference between weather and climate.",
+    "marks": 2
+  },
+  "Q4": {
+    "question_text": "Difference between area and perimeter.",
+    "marks": 2
+  },
+  "Q5": {
+    "question_text": "Difference between herbivores and carnivores.",
+    "marks": 2
+  }
+}

@@ -1,43 +1,156 @@
 import re
+from utils.logger import get_logger
+from document_parser.text_cleaner import clean_ocr_text
 
-def parse_question_paper(raw_text: str) -> dict:
+logger = get_logger(__name__)
+
+# Very permissive pattern for handwritten OCR
+# Handles 'Q1', 'Q 1', 'q.1', '1.', '1)', 'Question 1', 'Q-1'
+# Handles merged text like "Q1.What is..."
+_BOUNDARY_PATTERN = re.compile(
+    r"""
+    (?mx)                       
+    ^[ \t]*                     
+    (?:
+        (?:Q|q|Question)[\.\-\s\,]*(\d+)[A-Za-z]?[\.\)\:\-\s\,]*
+        |
+        (\d+)[\.\)\,][ \t]*
+    )
+    """,
+    re.VERBOSE | re.MULTILINE
+)
+
+# Detect subquestions like a), b), (a), (i), (ii)
+_SUBQUESTION_PATTERN = re.compile(
+    r"""
+    (?mx)
+    ^[ \t]*
+    (?:
+        \(([a-z_ivx]+)\)[ \t]*
+        |
+        ([a-z_ivx]+)\)[ \t]*
+    )
+    """,
+    re.VERBOSE | re.MULTILINE
+)
+
+def parse_question_paper(raw_text: str, document_meta: dict = None) -> dict:
     """
-    Parses OCR text of a Question Paper into structured JSON.
-    Expected to find boundaries like "Q1.", "1)", or "Question 1" 
-    and optionally parses marks if present like "[5]" or "(5 Marks)".
-    
-    Returns:
-    { "Q1": {"question_text": "...", "marks": 5} }     
+    Parses noisy OCR text from handwritten question papers.
+    Returns structured JSON-compliant dictionary matching the requested schema.
     """
-    structured_data = {}
+    if document_meta is None:
+        document_meta = {"type": "unknown", "source": "unknown"}
+
+    text = clean_ocr_text(raw_text)
+    boundaries = _find_question_boundaries(text)
+
+    # Fallback if entirely unstructured
+    if len(boundaries) == 0:
+        logger.warning("No questions detected, treating entire doc as Q1.")
+        boundaries = [("Q1", "1", 0)]
+
+    questions = []
     
-    # 1. Regex to split the text into question blocks based on standard numerical prefixes
-    # Matches patterns like: "1.", "Q1", "Question 1:" 
-    # capturing the number in group(1)
-    split_pattern = r"(?im)^\s*(?:Q|Question)?\s*(\d+)(?:[\.\):\-])\s+"
-    parts = re.split(split_pattern, raw_text)
-    
-    if len(parts) <= 1:
-        # Heavily degraded OCR or paragraph style paper: Default grouping
-        return {"Q1": {"question_text": raw_text.strip(), "marks": 0}}
+    for idx, (q_id, q_num, start) in enumerate(boundaries):
+        end = boundaries[idx + 1][2] if idx + 1 < len(boundaries) else len(text)
+        block = text[start:end].strip()
         
-    for i in range(1, len(parts), 2):
-        q_num = f"Q{parts[i]}"
-        q_raw_text = parts[i+1].strip() if i+1 < len(parts) else ""
+        # Clean header and extract sub-components
+        block = _strip_question_header(block)
         
-        # 2. Extract potential marks attached to the question (e.g. [5], (10 marks))
-        marks_match = re.search(r"[\(\[]\s*(\d+)\s*(?:marks?|pts?)?\s*[\)\]]", q_raw_text, re.IGNORECASE)
-        marks = 0
-        clean_question = q_raw_text
+        q_text, subquestions = _extract_subquestions(block)
+        marks = _extract_marks(block)
+
+        questions.append({
+            "question_id": q_id,
+            "question_number": q_num,
+            "question_text": q_text,
+            "marks": marks,
+            "subquestions": subquestions,
+            "raw_block": block,
+            "page_refs": [] # Page refs placeholder - implemented upstream if needed
+        })
         
-        if marks_match:
-            marks = int(marks_match.group(1))
-            # Optional: Strip the marks text from the actual question string
-            clean_question = q_raw_text.replace(marks_match.group(0), "").strip()
-            
-        structured_data[q_num] = {
-            "question_text": clean_question,
-            "marks": marks
+        logger.info(f"Parsed {q_id}: marks={marks} | subs={len(subquestions)} | '{q_text[:40].strip()}'")
+
+    return {
+        "document_type": document_meta.get("type", "handwritten_question_paper"),
+        "source_file": document_meta.get("source", "unknown"),
+        "questions": questions,
+        "metadata": {
+            "parser_notes": ["Parsed using handwritten heuristics"],
+            "warnings": [] if len(boundaries) > 0 else ["No structure found"]
         }
-        
-    return structured_data
+    }
+
+
+def _find_question_boundaries(text: str) -> list:
+    """Returns list of (q_id, q_num, char_offset) tuples."""
+    boundaries = []
+    seen = set()
+    for match in _BOUNDARY_PATTERN.finditer(text):
+        num = match.group(1) or match.group(2)
+        if num:
+            q_id = f"Q{num}"
+            if q_id not in seen:
+                seen.add(q_id)
+                boundaries.append((q_id, num, match.start()))
+    return boundaries
+
+
+def _strip_question_header(block: str) -> str:
+    lines = block.split('\n')
+    if not lines:
+        return block
+    # Remove the boundary match from the very first line
+    first_line = re.sub(
+        r'^[ \t]*(?:(?:Q|q|Question)[\.\-\s\,]*\d+[\.\)\:\-\s\,]*|\d+[\.\)\,][ \t]*)',
+        '', lines[0], flags=re.IGNORECASE
+    ).strip()
+    
+    lines[0] = first_line
+    return '\n'.join(lines).strip()
+
+
+def _extract_subquestions(block: str) -> tuple:
+    """
+    Finds (a), (b), etc within the question block.
+    Returns (main_question_text, [{"label": "a", "text": "..."}])
+    """
+    boundaries = []
+    for match in _SUBQUESTION_PATTERN.finditer(block):
+        label = match.group(1) or match.group(2)
+        if label:
+            boundaries.append((label, match.start(), match.end()))
+
+    if not boundaries:
+        return block, []
+
+    # Text before the first subquestion is the main prompt
+    main_text = block[:boundaries[0][1]].strip()
+    subquestions = []
+
+    for idx, (label, start, content_start) in enumerate(boundaries):
+        end = boundaries[idx + 1][1] if idx + 1 < len(boundaries) else len(block)
+        sub_text = block[content_start:end].strip()
+        subquestions.append({
+            "label": label,
+            "text": sub_text
+        })
+
+    return main_text, subquestions
+
+
+def _extract_marks(block: str) -> int:
+    """Aggressive heuristic extraction of marks typical in handwriting: [5], 5M, 5 Marks"""
+    # Ex: [ 5 ], (5), [5marks], 5 M
+    patterns = [
+        r'[\(\[]\s*(\d+)\s*(?:marks?|m|pts?)?\s*[\)\]]',
+        r'(\d+)\s*(?:marks?|pts?)'
+    ]
+    for pat in patterns:
+        m = re.search(pat, block, re.IGNORECASE)
+        if m:
+            return int(m.group(1))
+    return 0

@@ -1,0 +1,17 @@
+{
+  "sessionTitle": "c",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "​C] COMPARISON (5 marks each)​\n​1) Differentiate between plant cell and animal cell.​\n​Rubric:​\n​●​\n​Cell wall present in plant cell (2)​\n​●​\n​Chloroplast present in plant cell (1)​\n​●​\n​Shape/structure difference (1)​\n​●​\n​Any valid additional difference (1)​\n​2) Difference between solids, liquids, and gases.​\n​Rubric:​\n​●​\n​Shape difference (2)​\n​●​\n​Volume/property difference (2)​\n​●​\n​Particle movement / flow difference (1)​\n​3) Difference between weather and climate.​\n​Rubric:​\n​●​\n​Weather = short-term condition (2)​\n​●​\n​Climate = long-term pattern (2)​\n​●​\n​Example/context (1)​\n​4) Difference between area and perimeter.​\n​Rubric:​\n​●​\n​Area = inside space (2)​\n​●​\n​Perimeter = boundary length (2)​\n​●​\n​Formula/example (1)​\n​5) Difference between herbivores and carnivores.​\n​Rubric:​\n​●​\n​Herbivores eat plants (2)​\n​●​\n​Carnivores eat animals/meat (2)​\n​●​\n​Example (1)​",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "​C] COMPARISON (5 marks each)​ ​1) Differentiate between plant cell and animal cell.​ ​Rubric:​ ​●​ ​Cell wall present in plant cell (2)​ ​●​ ​Chloroplast present in plant cell (1)​ ​●​ ​Shape/structure difference (1)​ ​●​ ​Any valid additional difference (1)​ ​2) Difference between solids, liquids, and gases.​ ​Rubric:​ ​●​ ​Shape difference (2)​ ​●​ ​Volume/property difference (2)​ ​●​ ​Particle movement / flow difference (1)​ ​3) Difference between weather and climate.​ ​Rubric:​ ​●​ ​Weather = short-term condition (2)​ ​●​ ​Climate = long-term pattern (2)​ ​●​ ​Example/context (1)​ ​4) Difference between area and perimeter.​ ​Rubric:​ ​●​ ​Area = inside space (2)​ ​●​ ​Perimeter = boundary length (2)​ ​●​ ​Formula/example (1)​ ​5) Difference between herbivores and carnivores.​ ​Rubric:​ ​●​ ​Herbivores eat plants (2)​ ​●​ ​Carnivores eat animals/meat (2)​ ​●​ ​Example (1)​",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

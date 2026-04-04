@@ -1,0 +1,105 @@
+{
+  "sessionTitle": "e",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "Chemical Formula of Water",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Acceptable Variation",
+          "description": "पानी का सूत्र H₂O है",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q2",
+      "questionPrompt": "Capital of India\nQuestion Translation: भारत की राजधानी क्या है?",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "New Delhi",
+          "weight": 2
+        },
+        {
+          "type": "Acceptable Variation",
+          "description": "नई दिल्ली",
+          "weight": 1
+        },
+        {
+          "type": "Partial Credit",
+          "description": "Delhi”(partial but may get partial credit depending on strictness)",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q3",
+      "questionPrompt": "Fill in the Blank\nQuestion: सूर्य ______ दिशा में उगता है।",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Acceptable Variation",
+          "description": "पूर्व (East)",
+          "weight": 1
+        },
+        {
+          "type": "Exact Match",
+          "description": "Purv",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q4",
+      "questionPrompt": "Newton’s Second Law",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Force = mass × acceleration",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "F = ma",
+          "weight": 2
+        },
+        {
+          "type": "Acceptable Variation",
+          "description": "बल = द्रव्यमान × त्वरण",
+          "weight": 1
+        },
+        {
+          "type": "Concept Match",
+          "description": "Force is equal to mass times acceleration",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q5",
+      "questionPrompt": "Simple Addition\nQuestion: 5 + 7",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Acceptable Variation",
+          "description": "बारह",
+          "weight": 1
+        },
+        {
+          "type": "Exact Match",
+          "description": "twelve",
+          "weight": 2
+        },
+        {
+          "type": "Final Answer Match",
+          "description": "12",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

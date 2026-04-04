@@ -1,0 +1,22 @@
+{
+  "sessionTitle": "f",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "​E] Numerical + Step-Based​\n​1. Speed​\n​Given: Distance = 60 km, Time = 2 hours​\n​Ideal Answer:​\n​●​\n​Formula: Speed = Distance / Time​\n​●​\n​Substitution: 60 / 2 = 30​\n​●​\n​Final Answer: 30 km/h​\n​2. Area of Circle​\n​Given: r = 7 cm​\n​Ideal Answer:​\n​●​\n​Formula: Area = πr²​\n​●​\n​Substitution: (22/7) × 7 × 7 = 154​\n​●​\n​inal Answer: 154 cm²​\n​3. Simple Interest​\n​Given: P = 1000, R = 5%, T = 2​\n​Ideal Answer:​\n​●​\n​Formula: SI = (P × R × T) / 100​\n​●​\n​Substitution: (1000 × 5 × 2) / 100 = 100​\n​●​\n​Final Answer: ₹100​\n​4. Linear Equation​\n​Given: 2x + 5 = 15​\n​Ideal Answer:​\n​●​\n​Step 1: 2x = 15 − 5 = 10​\n​●​\n​Step 2: x = 10 / 2 = 5​\n​●​\n​Final Answer: x = 5​\n​5. Percentage​\n​Given: 45 out of 60​\n​Ideal Answer:​\n​●​\n​Formula: Percentage = (Marks / Total) × 100​\n​●​\n​Substitution: (45 / 60) × 100 = 75​\n​●​\n​Final Answer: 75​",
+      "marks": 0,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "​E] Numerical + Step-Based​ ​1. Speed​ ​Given: Distance = 60 km, Time = 2 hours​ ​Ideal Answer:​ ​●​ ​Formula: Speed = Distance / Time​ ​●​ ​Substitution: 60 / 2 = 30​ ​●​ ​Final Answer: 30 km/h​ ​2. Area of Circle​ ​Given: r = 7 cm​ ​Ideal Answer:​ ​●​ ​Formula: Area = πr²​ ​●​ ​Substitution: (22/7) × 7 × 7 = 154​ ​●​ ​inal Answer: 154 cm²​ ​3. Simple Interest​ ​Given: P = 1000, R = 5%, T = 2​ ​Ideal Answer:​ ​●​ ​Formula: SI = (P × R × T) / 100​ ​●​ ​Substitution: (1000 × 5 × 2) / 100 = 100​ ​●​ ​Final Answer: ₹100​ ​4. Linear Equation​ ​Given: 2x + 5 = 15​ ​Ideal Answer:​ ​●​ ​Step 1: 2x = 15 − 5 = 10​ ​●​ ​Step 2: x = 10 / 2 = 5​ ​●​ ​Final Answer: x = 5​ ​5. Percentage​ ​Given: 45 out of 60​ ​Ideal Answer:​ ​●​ ​Formula: Percentage = (Marks / Total) × 100​ ​●​ ​Substitution: (45 / 60) × 100 = 75​ ​●​ ​Final Answer: 75​",
+          "weight": 1
+        },
+        {
+          "type": "Formula Match",
+          "description": "Speed = Distance / Time​",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}
