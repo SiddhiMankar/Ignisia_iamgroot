@@ -40,6 +40,7 @@ export default function FacultyReview() {
   const [mockData, setMockData] = useState({ clusters: [], semanticNodes: [] });
   const [activeNode, setActiveNode] = useState(null);
   const [zoomDomain, setZoomDomain] = useState(300);
+  const [presetMode, setPresetMode] = useState('balanced'); // Threshold AI configuration
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -277,16 +278,46 @@ Ignisia Custom AI Tutoring
                 <h3 className="text-lg font-semibold text-white cursor-default">Semantic AI Distance Map</h3>
                 <p className="text-sm text-slate-400">Hover over any student node to view their unique vector grading profile.</p>
               </div>
-              <div className="flex space-x-2 shrink-0">
-                <button onClick={() => setZoomDomain(prev => Math.max(50, prev - 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom In">
-                  <ZoomIn className="w-4 h-4" />
-                </button>
-                <button onClick={() => setZoomDomain(prev => Math.min(800, prev + 50))} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Zoom Out">
-                  <ZoomOut className="w-4 h-4" />
-                </button>
-                <button onClick={resetView} className="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors" title="Reset Zoom & Center">
-                  <Maximize className="w-4 h-4" />
-                </button>
+              <div className="flex items-center space-x-4 shrink-0">
+                {/* AI Preset Modes */}
+                <div className="hidden lg:flex bg-slate-900 border border-slate-700/80 rounded-lg p-1 space-x-1 shadow-inner">
+                  <button 
+                    title="Expanded Similarity Catch"
+                    onClick={() => setPresetMode('lenient')} 
+                    className={`px-3 py-1.5 rounded-md text-xs font-bold tracking-wide transition-all ${presetMode === 'lenient' ? 'bg-green-500/10 text-green-400 border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]' : 'text-slate-500 hover:text-slate-300 border border-transparent'}`}
+                  >
+                     🟢 Lenient
+                  </button>
+                  <button 
+                    title="Default Heuristics"
+                    onClick={() => setPresetMode('balanced')} 
+                    className={`px-3 py-1.5 rounded-md text-xs font-bold tracking-wide transition-all ${presetMode === 'balanced' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.1)]' : 'text-slate-500 hover:text-slate-300 border border-transparent'}`}
+                  >
+                     🟡 Balanced
+                  </button>
+                  <button 
+                    title="Narrow Concept Tolerance"
+                    onClick={() => setPresetMode('strict')} 
+                    className={`px-3 py-1.5 rounded-md text-xs font-bold tracking-wide transition-all ${presetMode === 'strict' ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30 shadow-[0_0_10px_rgba(244,63,94,0.1)]' : 'text-slate-500 hover:text-slate-300 border border-transparent'}`}
+                  >
+                     🔴 Strict
+                  </button>
+                </div>
+
+                <div className="h-8 w-px bg-slate-800" />
+
+                {/* Mechanical Zoom */}
+                <div className="flex space-x-1.5">
+                  <button onClick={() => setZoomDomain(prev => Math.max(50, prev - 50))} className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow" title="Zoom In">
+                    <ZoomIn className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => setZoomDomain(prev => Math.min(800, prev + 50))} className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow" title="Zoom Out">
+                    <ZoomOut className="w-4 h-4" />
+                  </button>
+                  <button onClick={resetView} className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-400 transition-colors shadow" title="Reset Zoom & Center">
+                    <Maximize className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </header>
             
