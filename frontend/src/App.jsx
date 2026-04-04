@@ -4,6 +4,7 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import FacultyReview from './pages/FacultyReview';
 import UploadSheets from './pages/UploadSheets';
 import EvaluationSessionBuilder from './pages/EvaluationSessionBuilder';
+import Analytics from './pages/Analytics';
 
 // Placeholder empty page for other routes
 const Placeholder = ({ title }) => (
@@ -22,7 +23,7 @@ function App() {
           <Route path="/exams" element={<EvaluationSessionBuilder />} />
           <Route path="/upload" element={<UploadSheets />} />
           <Route path="/review" element={<FacultyReview />} />
-          <Route path="/analytics" element={<Placeholder title="Analytics Engine" />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </DashboardLayout>
     </BrowserRouter>
