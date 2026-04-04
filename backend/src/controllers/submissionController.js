@@ -3,7 +3,7 @@ const orchestrationService = require('../services/orchestrationService');
 
 exports.uploadSubmission = async (req, res) => {
   try {
-    const { sessionId } = req.body;
+    const { sessionId, documentType } = req.body;
     const file = req.file;
 
     if (!file) {
@@ -25,7 +25,7 @@ exports.uploadSubmission = async (req, res) => {
 
     // 2. Immediately fire the AI pipeline trigger!
     // We don't await this so the user isn't holding the connection
-    orchestrationService.triggerAIEvaluation(submission._id, sessionId);
+    orchestrationService.triggerAIEvaluation(submission._id, sessionId, documentType || 'answer_sheet');
 
     // 3. Respond back to React instantly
     res.status(202).json({

@@ -5,7 +5,7 @@ const orchestrationService = require('../services/orchestrationService');
 
 exports.triggerPipeline = async (req, res) => {
   try {
-    const { sessionId, submissionId } = req.body;
+    const { sessionId, submissionId, documentType } = req.body;
     
     // Immediately respond to React so the browser doesn't spin and hang
     res.status(202).json({ 
@@ -13,7 +13,7 @@ exports.triggerPipeline = async (req, res) => {
     });
 
     // Execute heavy logic in background
-    await orchestrationService.triggerAIEvaluation(submissionId, sessionId);
+    await orchestrationService.triggerAIEvaluation(submissionId, sessionId, documentType);
 
   } catch (error) {
     console.error(error);
@@ -125,5 +125,80 @@ exports.getClusters = async (req, res) => {
   } catch (error) {
     console.error('[Fetch Clusters Error]', error);
     res.status(500).json({ error: 'Failed to fetch clusters' });
+  }
+};
+
+/**
+ * PARSE FACULTY DOCUMENT
+ * Proxies the request to the AI Engine
+ */
+exports.parseFacultyDocument = async (req, res) => {
+  try {
+    const documentType = req.body.documentType || 'rubric';
+    const sessionTitle = req.body.sessionTitle || 'Imported Session';
+    const sessionId = req.body.sessionId || null;
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded. Please attach a PDF or image.' });
+    }
+
+    const absoluteFilePath = req.file.path;
+    console.log(`[Faculty Parse] File saved at: ${absoluteFilePath}, type: ${documentType}`);
+
+    // 1. Run OCR via AI Engine
+    const result = await orchestrationService.parseFacultyDocument(absoluteFilePath, documentType, sessionTitle);
+
+    // 2. Save structured rubric JSON to MongoDB
+    try {
+      const RubricDocument = require('../models/RubricDocument');
+      const rubricDoc = await RubricDocument.create({
+        sessionId:     sessionId || undefined,
+        sessionTitle:  result.sessionTitle || sessionTitle,
+        document_type: documentType,
+        source_file:   req.file.originalname,
+        questions:     (result.questions || []).map(q => {
+          const qExtracted = q.structured || {};
+          // Ensure question_number is a valid number, or null
+          const qNumRaw = qExtracted.question_number || (q.questionId || '').replace(/\D/g, '');
+          const qNum = parseInt(qNumRaw);
+          
+          return {
+            question_number: isNaN(qNum) ? null : qNum,
+            question_text:   qExtracted.question_text || q.questionPrompt || '',
+            question_type:   qExtracted.question_type || q.questionType || 'short_concept',
+            max_marks:       qExtracted.max_marks || q.marks || null,
+            rubric_points:   (qExtracted.rubric_points || q.rules || []).map(r => ({
+              type:              r.type || 'concept_point',
+              point:             r.point || r.description || '',
+              marks:             isNaN(parseFloat(r.marks || r.weight)) ? null : parseFloat(r.marks || r.weight),
+              keywords:          r.keywords || [],
+              alternate_phrases: r.alternate_phrases || [],
+              concept_meaning:   r.concept_meaning || ''
+            }))
+          };
+        }),
+        embedding_status: 'PENDING',
+        meta: result.meta || {}
+      });
+      console.log(`[Faculty Parse] Saved to MongoDB: ${rubricDoc._id}`);
+      result.rubricDocumentId = rubricDoc._id;
+      
+      // 3. Trigger Vector Embedding in Python Engine
+      orchestrationService.triggerRubricEmbedding(rubricDoc._id);
+      
+    } catch (dbError) {
+      // Non-fatal: log but don't fail the request
+      console.error('[Faculty Parse] MongoDB save failed (non-fatal):', dbError.message);
+    }
+
+    res.status(200).json(result);
+
+  } catch (error) {
+    const pyDetail = error.response?.data?.detail || error.response?.data?.error;
+    console.error('[Faculty Parse Error]', pyDetail || error.message);
+    res.status(500).json({ 
+      error: 'Failed to parse faculty document', 
+      detail: pyDetail || error.message 
+    });
   }
 };

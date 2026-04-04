@@ -8,7 +8,7 @@ export default function FacultyReview() {
 
   // Fetch the mock data from our node backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/reviews/mock')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/reviews/mock`)
       .then(res => {
         setClusters(res.data.clusters);
         setLoading(false);
