@@ -1,0 +1,105 @@
+{
+  "sessionTitle": "a",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "What is photosynthesis?",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "Process by which plants make food",
+          "weight": 1
+        },
+        {
+          "type": "Exact Match",
+          "description": "Uses sunlight",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Uses carbon dioxide and water / produces oxygen",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q2",
+      "questionPrompt": "What is evaporation?Rubric",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "What is evaporation?Rubric:",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Liquid changes into gas/vapour (2)Due to heat / temperature",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Example or context",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q3",
+      "questionPrompt": "What is a habitat?",
+      "marks": 3,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Natural home/environment of organism",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Supports living / survival",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q4",
+      "questionPrompt": "What is a fraction?",
+      "marks": 3,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "Represents part of a whole",
+          "weight": 1
+        },
+        {
+          "type": "Formula Match",
+          "description": "Written as numerator/denominator",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q5",
+      "questionPrompt": "What is a democracy?",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Government by people",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "People choose leaders / voting",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Public participation mention",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

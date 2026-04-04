@@ -1,0 +1,22 @@
+{
+  "Q1": {
+    "question_text": "Identify and correct the error\n“She don’t like playing football.”",
+    "marks": 2
+  },
+  "Q2": {
+    "question_text": "Fill in the blank (Tense)\nBy next year, I ______ (complete) my degree.",
+    "marks": 2
+  },
+  "Q3": {
+    "question_text": "Change to passive voice\n“The teacher explained the concept clearly.”",
+    "marks": 1
+  },
+  "Q4": {
+    "question_text": "Choose the correct word\nHe is ______ (strong/stronger/strongest) than his brother.",
+    "marks": 3
+  },
+  "Q5": {
+    "question_text": "Rewrite with proper punctuation\n“what are you doing now”",
+    "marks": 2
+  }
+}

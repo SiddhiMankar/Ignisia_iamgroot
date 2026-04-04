@@ -1,0 +1,91 @@
+{
+  "Q1": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Chemical Formula of Water",
+      "H₂O",
+      "“H2O”",
+      "“पानी का सूत्र H₂O है”",
+      "H₂O",
+      "[AV] “H2O”",
+      "H₂O",
+      "[AV] “H2O”",
+      "[AV] “पानी का सूत्र H₂O है”"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q2": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Capital of India",
+      "New Delhi",
+      "“नई दिल्ली”",
+      "“Delhi”(partial but may get partial credit depending on strictness)",
+      "New Delhi",
+      "[AV] “नई दिल्ली”",
+      "New Delhi",
+      "[AV] “नई दिल्ली”",
+      "[AV] “Delhi”(partial but may get partial credit depending on strictness)"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": [
+      "depending on strictness)"
+    ]
+  },
+  "Q3": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Fill in the Blank",
+      "पूर्व (East)",
+      "“East”",
+      "“Purv”",
+      "पूर्व (East)",
+      "[AV] “East”",
+      "पूर्व (East)",
+      "[AV] “East”",
+      "[AV] “Purv”",
+      "• पूर्व (East)"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q4": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Newton’s Second Law",
+      "Force = mass × acceleration",
+      "“F = ma”",
+      "“बल = द्रव्यमान × त्वरण”",
+      "“Force is equal to mass times acceleration”",
+      "Force = mass × acceleration",
+      "[AV] “F = ma”",
+      "Force = mass × acceleration",
+      "[AV] “F = ma”",
+      "[AV] “बल = द्रव्यमान × त्वरण”",
+      "[AV] “Force is equal to mass times acceleration”"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  },
+  "Q5": {
+    "max_marks": 0,
+    "keywords": [],
+    "expected_concepts": [
+      "Simple Addition",
+      "“बारह”",
+      "“twelve”",
+      "12",
+      "[AV] “बारह”",
+      "12",
+      "[AV] “बारह”",
+      "[AV] “twelve”"
+    ],
+    "formula_rules": [],
+    "partial_credit_rules": []
+  }
+}

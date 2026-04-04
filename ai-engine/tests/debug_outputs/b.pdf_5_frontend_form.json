@@ -1,0 +1,120 @@
+{
+  "sessionTitle": "b",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "Why is mitochondria called the powerhouse of the cell?\nRubrics",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Produces energy",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Produces ATP / energy for cell activities",
+          "weight": 2
+        },
+        {
+          "type": "Concept Match",
+          "description": "Called powerhouse because it supplies energy",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "questionId": "Q2",
+      "questionPrompt": "Explain the process of photosynthesis.\nRubrics",
+      "marks": 1,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Plants use sunlight",
+          "weight": 2
+        },
+        {
+          "type": "Concept Match",
+          "description": "Carbon dioxide + water involved",
+          "weight": 1
+        },
+        {
+          "type": "Formula Match",
+          "description": "Food/glucose formed",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Oxygen released",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q3",
+      "questionPrompt": "Why do we need water in daily life?",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Formula Match",
+          "description": "Drinking/body function",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Cooking/cleaning/hygiene",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Survival importance",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q4",
+      "questionPrompt": "Explain how the water cycle works.",
+      "marks": 1,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Evaporation",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Condensation",
+          "weight": 2
+        },
+        {
+          "type": "Formula Match",
+          "description": "Precipitation/rain",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Repetition as cycle",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q5",
+      "questionPrompt": "Why do objects fall to the ground?",
+      "marks": 3,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Gravity mentioned",
+          "weight": 2
+        },
+        {
+          "type": "Concept Match",
+          "description": "Earth pulls objects downward",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

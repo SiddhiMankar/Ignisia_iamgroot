@@ -1,0 +1,79 @@
+{
+  "sessionTitle": "d",
+  "questions": [
+    {
+      "questionId": "Q1",
+      "questionPrompt": "Identify and correct the error\n“She don’t like playing football.”",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "Error identified (“don’t” incorrect)",
+          "weight": 1
+        },
+        {
+          "type": "Exact Match",
+          "description": "Full corrected sentence:",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q2",
+      "questionPrompt": "Fill in the blank (Tense)\nBy next year, I ______ (complete) my degree.",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "will have completed",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q3",
+      "questionPrompt": "Change to passive voice\n“The teacher explained the concept clearly.”",
+      "marks": 1,
+      "rules": [
+        {
+          "type": "Concept Match",
+          "description": "Object correctly identified (concept)",
+          "weight": 1
+        },
+        {
+          "type": "Concept Match",
+          "description": "The concept was explained clearly by the teacher.",
+          "weight": 2
+        }
+      ]
+    },
+    {
+      "questionId": "Q4",
+      "questionPrompt": "Choose the correct word\nHe is ______ (strong/stronger/strongest) than his brother.",
+      "marks": 3,
+      "rules": []
+    },
+    {
+      "questionId": "Q5",
+      "questionPrompt": "Rewrite with proper punctuation\n“what are you doing now”",
+      "marks": 2,
+      "rules": [
+        {
+          "type": "Exact Match",
+          "description": "Capitalization (“What”)",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Question mark",
+          "weight": 2
+        },
+        {
+          "type": "Exact Match",
+          "description": "Full correct sentence",
+          "weight": 2
+        }
+      ]
+    }
+  ]
+}

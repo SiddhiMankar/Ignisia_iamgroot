@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
-import { Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
+import { Mail, Lock, LogIn, UserPlus, AlertCircle, User } from 'lucide-react';
 
 export default function Login() {
+  const [isSignup, setIsSignup] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('karthik@ignisia.edu');
   const [password, setPassword] = useState('password123');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
+    const endpoint = isSignup ? 'signup' : 'login';
+    const body = isSignup ? { name, email, password } : { email, password };
+
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(`http://localhost:5001/api/auth/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
@@ -29,7 +34,7 @@ export default function Login() {
         // Redirect to dashboard
         window.location.href = '/review';
       } else {
-        setError(data.error || 'Failed to authenticate');
+        setError(data.error || `Failed to ${endpoint}`);
       }
     } catch (err) {
       setError('Cannot connect to backend server. Is it running?');
@@ -49,10 +54,10 @@ export default function Login() {
             IG
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-            Welcome to Ignisia
+            {isSignup ? 'Create an Account' : 'Welcome to Ignisia'}
           </h1>
           <p className="text-slate-400 mt-2 text-center">
-            Sign in to access the AI Grader Dashboard
+            {isSignup ? 'Register to access the AI Grader Dashboard' : 'Sign in to access the AI Grader Dashboard'}
           </p>
         </div>
 
@@ -65,8 +70,27 @@ export default function Login() {
             </div>
           )}
 
-          <form className="space-y-6" onSubmit={handleLogin}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             
+            {isSignup && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-300">Full Name</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <User className="h-5 w-5 text-slate-500" />
+                  </div>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                    placeholder="Prof. John Doe"
+                    required={isSignup}
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-300">Email Address</label>
               <div className="relative">
@@ -79,6 +103,7 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
                   placeholder="faculty@university.edu"
+                  required
                 />
               </div>
             </div>
@@ -86,7 +111,9 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-slate-300">Password</label>
-                <a href="#" className="text-xs text-brand-400 hover:text-brand-300">Forgot password?</a>
+                {!isSignup && (
+                  <a href="#" className="text-xs text-brand-400 hover:text-brand-300">Forgot password?</a>
+                )}
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -98,6 +125,7 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
                   placeholder="••••••••"
+                  required
                 />
               </div>
             </div>
@@ -107,15 +135,29 @@ export default function Login() {
               disabled={loading}
               className={`w-full flex items-center justify-center space-x-2 bg-brand-600 hover:bg-brand-500 text-white py-3 rounded-xl font-medium transition-all duration-200 shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
             >
-              <span>{loading ? 'Signing In...' : 'Sign In'}</span>
-              <LogIn className="w-4 h-4" />
+              <span>{loading ? 'Processing...' : (isSignup ? 'Sign Up' : 'Sign In')}</span>
+              {isSignup ? <UserPlus className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
             </button>
           </form>
         </div>
 
-        <p className="text-center text-slate-500 text-sm mt-8">
-          Need access or help? <a href="#" className="text-brand-400 hover:underline">Contact Administrator</a>
-        </p>
+        <div className="text-center mt-8 space-y-2">
+          <p className="text-slate-500 text-sm">
+            {isSignup ? "Already have an account?" : "Don't have an account?"}{' '}
+            <button 
+              onClick={() => {
+                setIsSignup(!isSignup);
+                setError(null);
+              }} 
+              className="text-brand-400 hover:underline font-medium focus:outline-none"
+            >
+              {isSignup ? 'Sign In' : 'Create one'}
+            </button>
+          </p>
+          <p className="text-slate-500 text-sm">
+            Need access or help? <a href="#" className="text-brand-400 hover:underline">Contact Administrator</a>
+          </p>
+        </div>
       </div>
     </div>
   );

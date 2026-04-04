@@ -1,0 +1,22 @@
+{
+  "Q1": {
+    "question_text": "Why is mitochondria called the powerhouse of the cell?\nRubrics",
+    "marks": 2
+  },
+  "Q2": {
+    "question_text": "Explain the process of photosynthesis.\nRubrics",
+    "marks": 1
+  },
+  "Q3": {
+    "question_text": "Why do we need water in daily life?",
+    "marks": 2
+  },
+  "Q4": {
+    "question_text": "Explain how the water cycle works.",
+    "marks": 1
+  },
+  "Q5": {
+    "question_text": "Why do objects fall to the ground?",
+    "marks": 3
+  }
+}

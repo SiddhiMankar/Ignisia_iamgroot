@@ -1,0 +1,11 @@
+{
+  "student_id": "sample_02",
+  "file_name": "f question sheet handwritten.pdf",
+  "expected_topic": "f",
+  "ocr_text_preview": "0B1 351\nY2o\nQH\n{1\nTIT X\n20\nM1...",
+  "parsed_answers": {
+    "Q1": "0B1 351\nY2o\nQH\n{1\nTIT X\n20\nM1"
+  },
+  "similarity_score": 0.191,
+  "likely_match": false
+}

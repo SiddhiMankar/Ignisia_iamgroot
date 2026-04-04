@@ -1,0 +1,15 @@
+{
+  "file_path": "C:\\Projects\\Ignisia_iamgroot\\ai-engine\\tests\\sample_docs\\Faculty test\\e.pdf",
+  "method": "pdf_text",
+  "pages": [
+    {
+      "page_number": 1,
+      "text": "​F] Multilingual Ability​\n​1. Chemical Formula of Water​\n​Ideal Answer:​\n​●​\n​H₂O​\n​Acceptable Variations:​\n​●​\n​“H2O”​\n​●​\n​“पानी का सूत्र H₂O है”​\n​2. Capital of India​\n​Question Translation: भारत की राजधानी क्या है?​\n​Ideal Answer:​\n​●​\n​New Delhi​\n​Acceptable Variations:​\n​●​\n​“नई दिल्ली”​\n​●​\n​“Delhi”​​(partial but may get partial credit depending on strictness)​\n​3. Fill in the Blank​\n​Question: सूर्य ______ दिशा में उगता है।​\n​Ideal Answer:​\n​●​\n​पूर्व (East)​\n​Acceptable Variations:​\n​●​\n​“East”​\n​●​\n​“Purv”​\n​4. Newton’s Second Law​\n​Ideal Answer (Short Form):​\n​●​\n​Force = mass × acceleration​\n​Acceptable Variations:​\n​●​\n​“F = ma”​\n​●​\n​“बल = द्रव्यमान × त्वरण”​\n​●​\n​“Force is equal to mass times acceleration”​\n​5. Simple Addition​\n​Question: 5 + 7​"
+    },
+    {
+      "page_number": 2,
+      "text": "​Ideal Answer:​\n​●​\n​12​\n​Acceptable Variations:​\n​●​\n​“बारह”​\n​●​\n​“twelve”​"
+    }
+  ],
+  "raw_text": "​F] Multilingual Ability​\n​1. Chemical Formula of Water​\n​Ideal Answer:​\n​●​\n​H₂O​\n​Acceptable Variations:​\n​●​\n​“H2O”​\n​●​\n​“पानी का सूत्र H₂O है”​\n​2. Capital of India​\n​Question Translation: भारत की राजधानी क्या है?​\n​Ideal Answer:​\n​●​\n​New Delhi​\n​Acceptable Variations:​\n​●​\n​“नई दिल्ली”​\n​●​\n​“Delhi”​​(partial but may get partial credit depending on strictness)​\n​3. Fill in the Blank​\n​Question: सूर्य ______ दिशा में उगता है।​\n​Ideal Answer:​\n​●​\n​पूर्व (East)​\n​Acceptable Variations:​\n​●​\n​“East”​\n​●​\n​“Purv”​\n​4. Newton’s Second Law​\n​Ideal Answer (Short Form):​\n​●​\n​Force = mass × acceleration​\n​Acceptable Variations:​\n​●​\n​“F = ma”​\n​●​\n​“बल = द्रव्यमान × त्वरण”​\n​●​\n​“Force is equal to mass times acceleration”​\n​5. Simple Addition​\n​Question: 5 + 7​\n\n​Ideal Answer:​\n​●​\n​12​\n​Acceptable Variations:​\n​●​\n​“बारह”​\n​●​\n​“twelve”​"
+}

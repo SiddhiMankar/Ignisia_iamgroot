@@ -26,6 +26,13 @@ app.use('/api/auth', authRouter);
 // Rubric CRUD — POST /api/rubric, GET /api/rubric, GET /api/rubric/:id
 app.use('/api/rubric', rubricRouter);
 
+// Evaluation & ML Pipeline Routes
+const sessionRoutes = require('./src/routes/sessionRoutes');
+const submissionRoutes = require('./src/routes/submissionRoutes');
+
+app.use('/api/sessions', sessionRoutes);
+app.use('/api/submissions', submissionRoutes);
+
 // Mock Evaluation Route (keeps frontend unblocked during dev)
 app.get('/api/reviews/mock', (req, res) => {
     res.sendFile(require('path').join(__dirname, 'mock_data', 'clustering_results.json'));

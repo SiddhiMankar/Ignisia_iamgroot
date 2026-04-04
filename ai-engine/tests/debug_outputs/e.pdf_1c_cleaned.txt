@@ -1,0 +1,36 @@
+F] Multilingual Ability
+1. Chemical Formula of Water
+Ideal Answer:
+• H₂O
+Acceptable Variations:
+• “H2O”
+• “पानी का सूत्र H₂O है”
+2. Capital of India
+Question Translation: भारत की राजधानी क्या है?
+Ideal Answer:
+• New Delhi
+Acceptable Variations:
+• “नई दिल्ली”
+• “Delhi”(partial but may get partial credit depending on strictness)
+3. Fill in the Blank
+Question: सूर्य ______ दिशा में उगता है।
+Ideal Answer:
+• पूर्व (East)
+Acceptable Variations:
+• “East”
+• “Purv”
+4. Newton’s Second Law
+Ideal Answer (Short Form):
+• Force = mass × acceleration
+Acceptable Variations:
+• “F = ma”
+• “बल = द्रव्यमान × त्वरण”
+• “Force is equal to mass times acceleration”
+5. Simple Addition
+Question: 5 + 7
+
+Ideal Answer:
+• 12
+Acceptable Variations:
+• “बारह”
+• “twelve”
