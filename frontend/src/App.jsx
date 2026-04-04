@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import FacultyReview from './pages/FacultyReview';
+import Login from './pages/Login';
 
 // Placeholder empty page for other routes
 const Placeholder = ({ title }) => (
@@ -11,18 +12,29 @@ const Placeholder = ({ title }) => (
   </div>
 );
 
+// Layout wrapper for routes that need the dashboard sidebar
+const DashboardWrapper = () => (
+  <DashboardLayout>
+    <Outlet />
+  </DashboardLayout>
+);
+
 function App() {
   return (
     <BrowserRouter>
-      <DashboardLayout>
-        <Routes>
+      <Routes>
+        {/* Full-screen route without sidebar */}
+        <Route path="/login" element={<Login />} />
+        
+        {/* Protected routes wrapped in the dashboard layout */}
+        <Route element={<DashboardWrapper />}>
           <Route path="/" element={<Navigate to="/review" replace />} />
           <Route path="/exams" element={<Placeholder title="Exams & Subjects" />} />
           <Route path="/upload" element={<Placeholder title="Upload Answer Sheets" />} />
           <Route path="/review" element={<FacultyReview />} />
           <Route path="/analytics" element={<Placeholder title="Analytics Engine" />} />
-        </Routes>
-      </DashboardLayout>
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
