@@ -6,6 +6,8 @@ import { UploadCloud } from 'lucide-react';
 export default function UploadSheets() {
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isDragActive, setIsDragActive] = useState(false);
+  const inputRef = React.useRef(null);
 
   const handleUpload = () => {
     setIsUploading(true);
@@ -23,6 +25,14 @@ export default function UploadSheets() {
     }, 200);
   };
 
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleUpload(); // Passes file list conceptually to the uploader
+    }
+  };
+
   return (
     <div className="space-y-8">
       <section>
@@ -31,7 +41,12 @@ export default function UploadSheets() {
       </section>
 
       <Card>
-        <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-outline-variant rounded-xl bg-background">
+        <div 
+          onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
+          onDragLeave={(e) => { e.preventDefault(); setIsDragActive(false); }}
+          onDrop={handleDrop}
+          className={`flex flex-col items-center justify-center p-12 border-2 ${isDragActive ? 'border-solid border-brand-500 bg-brand-500/10' : 'border-dashed border-outline-variant bg-background'} rounded-xl transition-all duration-200`}
+        >
           <UploadCloud className="w-16 h-16 text-on-surface mb-4" />
           <p className="text-lg font-medium text-on-surface">Drag & drop your files here</p>
           <p className="text-sm text-on-surface-variant mb-6">Supports PDF, JPG, PNG (Max 50MB)</p>
@@ -47,7 +62,17 @@ export default function UploadSheets() {
               <p className="text-center mt-2 text-sm text-on-surface-variant">Uploading... {progress}%</p>
             </div>
           ) : (
-            <Button variant="primary" onClick={handleUpload}>Browse Files</Button>
+            <>
+              <input 
+                type="file" 
+                ref={inputRef} 
+                onChange={handleUpload} 
+                className="hidden" 
+                multiple 
+                accept=".pdf,.jpg,.jpeg,.png" 
+              />
+              <Button variant="primary" onClick={() => inputRef.current?.click()}>Browse Files</Button>
+            </>
           )}
         </div>
       </Card>

@@ -1,7 +1,7 @@
 // Sidebar component – vertical navigation with Lucide icons
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, UploadCloud, CheckCircle, BarChart3, Settings } from 'lucide-react';
+import { LayoutDashboard, FileText, UploadCloud, CheckCircle, BarChart3, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Overview', path: '/' },
@@ -40,10 +40,17 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="p-6 border-t border-outline-variant">
+      <div className="p-6 border-t border-outline-variant space-y-4">
         <button className="flex items-center space-x-3 text-on-surface-variant hover:text-primary transition-colors w-full">
           <Settings className="w-5 h-5" />
           <span className="font-medium">Settings</span>
+        </button>
+        <button 
+          onClick={() => window.location.href = '/login'}
+          className="flex items-center space-x-3 text-rose-500 hover:text-rose-400 transition-colors w-full"
+        >
+          <LogOut className="w-5 h-5" />
+          <span className="font-medium">Logout</span>
         </button>
       </div>
     </aside>
