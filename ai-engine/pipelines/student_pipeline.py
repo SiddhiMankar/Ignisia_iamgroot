@@ -1,10 +1,19 @@
+import sys
+import os
+
+# Ensure ocr_v2/src is on the path so bare imports like 'preprocessing' resolve
+# regardless of which entry point (main.py, tests, etc.) loads this module.
+_ocr_src = os.path.join(os.path.dirname(__file__), '..', '..', 'ocr_v2', 'src')
+if os.path.isdir(_ocr_src) and _ocr_src not in sys.path:
+    sys.path.insert(0, os.path.abspath(_ocr_src))
+
 from document_intelligence.student.parse_answer_sheet import parse_answer_sheet
 from document_intelligence.student.align_question_answer import align_evaluation_data
 from utils.logger import get_logger
 from preprocessing.stabilize import stabilize_document
 from extraction.ocr_engine import run_student_ocr
 from extraction.student_parser import structure_student_document
-import os
+
 
 logger = get_logger(__name__)
 

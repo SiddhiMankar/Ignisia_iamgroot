@@ -3,11 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { FileSignature, FileKey, Layers, LayoutDashboard, BrainCircuit, Users, LogOut } from 'lucide-react';
 
 const navItems = [
-  { icon: LayoutDashboard, label: 'Overview', path: '/' },
-  { icon: FileKey, label: 'Faculty Setup', path: '/faculty-setup' },
-  { icon: FileSignature, label: 'Student Extraction', path: '/student-extraction' },
-  { icon: BrainCircuit, label: 'Evaluation Results', path: '/evaluation-results' },
-  { icon: Layers, label: 'Cluster Analysis', path: '/cluster-analysis' },
+  { icon: FileKey,        label: '1. Rubric Setup',       path: '/faculty-setup',      step: 1 },
+  { icon: FileSignature,  label: '2. Student Upload',      path: '/student-extraction', step: 2 },
+  { icon: BrainCircuit,  label: '3. Cluster Analysis',    path: '/cluster-analysis',   step: 3 },
+  { icon: Layers,        label: 'Evaluation Results',     path: '/evaluation-results', step: null },
 ];
 
 export default function Sidebar() {

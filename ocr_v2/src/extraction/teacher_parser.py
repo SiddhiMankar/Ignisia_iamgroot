@@ -164,6 +164,42 @@ def extract_marks_from_line(line: str) -> Optional[int]:
     return None
 
 
+# ─── Pre-processor: split merged OCR lines ─────────────────────────────────────
+def split_merged_lines(line_texts: List[str]) -> List[str]:
+    """
+    Handles the common OCR artifact where question text and rubric points get
+    fused onto a single line (e.g. "What is X?Rubric: point1 (2)point2 (2)").
+    Splits them back into discrete logical lines before the main parser runs.
+    """
+    result = []
+    INLINE_RUBRIC = re.compile(r'([?!.])?\s*(Rubric|Answer|Expected Answer|Key Points?)\s*:', re.IGNORECASE)
+    INLINE_POINT_SPLIT = re.compile(r'(\(\d+\))\s*(?=[A-Z])')
+
+    for line in line_texts:
+        m = INLINE_RUBRIC.search(line)
+        if m:
+            q_part = line[:m.start() + (1 if m.group(1) else 0)].strip()
+            rubric_body = line[m.end():].strip()
+            if q_part:
+                result.append(q_part)
+            result.append("Rubric:")
+            if rubric_body:
+                parts = INLINE_POINT_SPLIT.split(rubric_body)
+                i = 0
+                while i < len(parts):
+                    text_chunk = parts[i].strip()
+                    marks_chunk = parts[i + 1].strip() if i + 1 < len(parts) else ''
+                    combined = (text_chunk + ' ' + marks_chunk).strip()
+                    if combined:
+                        result.append('• ' + combined)
+                    i += 2
+                if len(parts) % 2 == 1 and parts[-1].strip():
+                    result.append('• ' + parts[-1].strip())
+        else:
+            result.append(line)
+    return result
+
+
 # ─── Main parser ───────────────────────────────────────────────────────────────
 def structure_teacher_document(line_texts: List[str], use_ai_enrichment: bool = True) -> Dict[str, Any]:
     """
@@ -187,6 +223,9 @@ def structure_teacher_document(line_texts: List[str], use_ai_enrichment: bool = 
       ]
     }
     """
+    # Pre-process: separate any OCR lines where question and rubric were merged
+    line_texts = split_merged_lines(line_texts)
+
     questions = []
     current_q = None
     in_rubric_section = False

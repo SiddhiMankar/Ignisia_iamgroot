@@ -3,6 +3,7 @@ import FileUploadCard from '../components/ui/FileUploadCard';
 import ProcessingStatusCard from '../components/ui/ProcessingStatusCard';
 import ExtractedQuestionCard from '../components/ui/ExtractedQuestionCard';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { Save, ArrowRight, ChevronDown } from 'lucide-react';
 
 // Mock backend response for Phase 1 testing
@@ -34,6 +35,7 @@ export default function FacultySetup({ activeRubric, setActiveRubric }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [processStep, setProcessStep] = useState(0);
   const [docType, setDocType] = useState('rubric');
+  const navigate = useNavigate();
 
   const STAGES = [
     "Uploading document...",
@@ -56,8 +58,9 @@ export default function FacultySetup({ activeRubric, setActiveRubric }) {
     formData.append('sessionTitle', 'New Academic Session');
 
     try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/sessions/faculty/parse`,
+        `${baseUrl}/api/sessions/faculty/parse`,
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -66,6 +69,7 @@ export default function FacultySetup({ activeRubric, setActiveRubric }) {
       setTimeout(() => {
         setIsProcessing(false);
         setActiveRubric(res.data);
+        navigate('/student-extraction'); // ← auto-guide to next step
       }, 500);
 
     } catch (error) {

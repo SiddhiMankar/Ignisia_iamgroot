@@ -63,7 +63,8 @@ export default function EvaluationSessionBuilder() {
         }))
       };
 
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/sessions/create`, payload);
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001';
+      const res = await axios.post(`${baseUrl}/api/sessions/create`, payload);
       alert(`Session Created! ID: ${res.data.sessionId}`);
       navigate('/upload');
       
